@@ -169,7 +169,6 @@ public class BlockComplexLog extends BlockLog {
     @SideOnly(Side.CLIENT)
     public void initModel() {
 //        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName()+"_item", "type=0"));
-//        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 1, new ModelResourceLocation(getRegistryName()+"_item", "type=1"));
     }
     
     @Override
