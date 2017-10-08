@@ -26,15 +26,16 @@ public class TreeRootTE extends TileEntity implements ITickable {
 
 	private int[] trunkSectionCount = new int[] { 0, 0, 0 };
 
-	private static int[] trunkSectionMaxLength = new int[] { 5, 4, 6 };
+	private static int[] trunkSectionMaxLength = new int[] { 2, 3, 4 };
 	private static int trunkMaxHeight = IntStream.of(trunkSectionMaxLength).sum();
 	
-	private static final int branchMinHeight = 5;
-	private static final int branchMaxLength = 4;
+	private static final int branchMinHeight = 3;
+//	private static final int branchMaxLength = 4;
 	private static final int branchLengthDiff = 1;
-	private static final boolean canGrowMultiBranch = false;
-	
-	private Map<BlockPos, int[]> branchLength = new HashMap<>();
+	private static final int branchHeightSpread = 2;
+	private static final int branchGrowthSpeed = 20;
+	private static final int branchMaxGrowthSpeed = 100;
+	private static final boolean canGrowMultiBranch = true;
 	
 	@Override
 	public void update() {
@@ -53,10 +54,13 @@ public class TreeRootTE extends TileEntity implements ITickable {
 	
 	public void grow(BlockPos pos) {
 		
-		System.out.println("pos:"+ pos +" tsc: "+trunkSectionCount[0]+" "+trunkSectionCount[1]+" "+trunkSectionCount[2]);
-		
 		BlockPos target = pos.offset(EnumFacing.UP);
 		
+		System.out.println("height:"+ getHeight(target) +" tsc: "+trunkSectionCount[0]+" "+trunkSectionCount[1]+" "+trunkSectionCount[2]);
+		
+		if(getHeight(target) > trunkMaxHeight) {
+			return;
+		}
 		
 //		IBlockState targetState = world.getBlockState(target);
 		
@@ -64,6 +68,7 @@ public class TreeRootTE extends TileEntity implements ITickable {
 		Vector<GrowAction> actions = new Vector<>();
 		actions.add(GrowAction.TRUNK_HEIGHT);
 		actions.add(GrowAction.TRUNK_WIDTH);
+		actions.add(GrowAction.BRANCH);
 		
 		while(! (result == GrowPartResult.DONE ||  actions.isEmpty()) ) {
 		
@@ -161,10 +166,12 @@ public class TreeRootTE extends TileEntity implements ITickable {
 						}
 					}
 					
-					return growBranch(target, target, newDir, size);
+					return growBranch(target, target, newDir, size, 0);
 				}
 			}
-			return GrowPartResult.CONTINUE;
+			else {
+				return GrowPartResult.CONTINUE;
+			}
 		}
 		
 		
@@ -173,30 +180,14 @@ public class TreeRootTE extends TileEntity implements ITickable {
 	
 	
 
-	public GrowPartResult growBranch(final BlockPos trunkPos, BlockPos pos, EnumFacing facing, int size) {
+	public GrowPartResult growBranch(final BlockPos trunkPos, final BlockPos pos, final EnumFacing facing, final int size, final int currentLength) {
 		BlockPos target = pos.offset(facing);
 		IBlockState targetState = world.getBlockState(target);
 		
-		int[] branchLengths = branchLength.get(trunkPos);
-		
-		
-		int currentBranchLength = 0;
-		
-		if(branchLengths == null) {
-			branchLengths = new int[] {0, 0, 0, 0};
-			branchLength.put(trunkPos, branchLengths);
-		}
-		else {
-			System.out.println("bl: "+branchLengths.toString());
-			currentBranchLength = branchLengths[facing.getHorizontalIndex()];
-		}
-		
-		System.out.println("cbl: "+currentBranchLength + " -> " + branchLengths[facing.getHorizontalIndex()]);
-		
-		
 		if(world.isAirBlock(target)) {
 			
-			if(currentBranchLength < branchMaxLength) {
+//			if(currentLength < branchMaxLength) {
+			if(currentLength < getBranchMaxLength(target)) {
 				
 				IBlockState newState = PrimitiModBlocks.blockComplexLog.getDefaultState()
 						.withProperty(BlockComplexLog.LOG_AXIS, BlockLog.EnumAxis.fromFacingAxis(facing.getAxis()))
@@ -204,15 +195,12 @@ public class TreeRootTE extends TileEntity implements ITickable {
 				
 				world.setBlockState(target, newState, 2);
 				
-				branchLengths[facing.getHorizontalIndex()]++;
-				branchLength.put(trunkPos, branchLengths);
-				
 				return GrowPartResult.DONE;
 			}
 			
 		}
 		else if(targetState.getBlock() == PrimitiModBlocks.blockComplexLog) {
-			return growBranch(trunkPos, target, facing, size);
+			return growBranch(trunkPos, target, facing, size, currentLength + 1);
 		}
 		
 		return GrowPartResult.STOP;
@@ -220,7 +208,20 @@ public class TreeRootTE extends TileEntity implements ITickable {
 	
 
 	public boolean canGrowBranch(BlockPos target) {
-		return target.getY() - this.pos.getY() > branchMinHeight;
+		int height = getHeight(target);
+		
+		return (height > branchMinHeight) && 
+			   (height % branchHeightSpread == 0) && 
+			   (random.nextInt(branchMaxGrowthSpeed) < branchGrowthSpeed);
+	}
+	
+	public int getBranchMaxLength(BlockPos target) {
+		return trunkMaxHeight - getHeight(target);
+	}
+	
+	public int getHeight(BlockPos target) {
+		int result = target.getY() - this.pos.getY();
+		return result < 1 ? 1 : result;
 	}
 	
 	public boolean isTrunkSectionMax(int size) {
