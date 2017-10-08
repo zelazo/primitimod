@@ -1,0 +1,16 @@
+[
+{
+  "modid": "primitimod",
+  "name": "PrimitiMod",
+  "description": "Primitive tech mod",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["CaveD"],
+  "credits": "The Forge and FML guys, for making Forge",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

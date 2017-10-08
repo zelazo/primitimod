@@ -1,0 +1,37 @@
+{
+    "multipart": [
+        {   "apply": { 
+        		"model": "primitimod:rock1",
+            	"transform" : {
+        			"translation" : [-0.2, 0.0, -0.2],
+        			"rotation" : [ { "x" : 4 }, { "y" : -48 }, { "z" : 2 } ],
+        			"scale" : 1.0
+            	}
+        	}
+        },
+        {   "when": { "pilesize": "0" },
+            "apply": { "model": "oak_fence_side", "uvlock": true }
+        },
+        {   "when": { "pilesize": "1" },
+            "apply": { "model": "oak_fence_side", "y": 90, "uvlock": true }
+        },
+        {   "when": { "pilesize": "2" },
+            "apply": { "model": "oak_fence_side", "y": 180, "uvlock": true }
+        },
+        {   "when": { "pilesize": "3" },
+            "apply": { "model": "oak_fence_side", "y": 270, "uvlock": true }
+        },
+        {   "when": { "pilesize": "4" },
+            "apply": { "model": "oak_fence_side", "y": 270, "uvlock": true }
+        },
+        {   "when": { "pilesize": "5" },
+            "apply": { "model": "oak_fence_side", "y": 270, "uvlock": true }
+        },
+        {   "when": { "pilesize": "6" },
+            "apply": { "model": "oak_fence_side", "y": 270, "uvlock": true }
+        },
+        {   "when": { "pilesize": "7" },
+            "apply": { "model": "oak_fence_side", "y": 270, "uvlock": true }
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "size=0" : { "model": "primitimod:logs/oak_log_big" },
+    "size=1" : { "model": "primitimod:logs/oak_log_thin" },
+    "size=2" : { "model": "primitimod:logs/oak_log_thinner" },
+    "size=3" : { "model": "primitimod:logs/oak_log_thinner" }
+    
+  }
+}
