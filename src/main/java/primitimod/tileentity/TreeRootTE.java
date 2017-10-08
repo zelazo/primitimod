@@ -1,8 +1,10 @@
 package primitimod.tileentity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.Vector;
 import java.util.stream.IntStream;
 
 import net.minecraft.block.BlockLog;
@@ -40,6 +42,8 @@ public class TreeRootTE extends TileEntity implements ITickable {
 			tickCounter++;
 			
 			if(tickCounter > updatePace) {
+				System.out.println("tick!");
+			
 				grow(pos);
 				tickCounter = 0;
 			}
@@ -47,7 +51,41 @@ public class TreeRootTE extends TileEntity implements ITickable {
 		}
 	}
 	
-	public boolean growPart(BlockPos target, GrowAction action) {
+	public void grow(BlockPos pos) {
+		
+		System.out.println("pos:"+ pos +" tsc: "+trunkSectionCount[0]+" "+trunkSectionCount[1]+" "+trunkSectionCount[2]);
+		
+		BlockPos target = pos.offset(EnumFacing.UP);
+		
+		
+//		IBlockState targetState = world.getBlockState(target);
+		
+		GrowPartResult result = GrowPartResult.STOP;
+		Vector<GrowAction> actions = new Vector<>();
+		actions.add(GrowAction.TRUNK_HEIGHT);
+		actions.add(GrowAction.TRUNK_WIDTH);
+		
+		while(! (result == GrowPartResult.DONE ||  actions.isEmpty()) ) {
+		
+			GrowAction chosenAction = actions.get(random.nextInt(actions.size()));
+			actions.remove(chosenAction);
+		
+			GrowPartResult tmp = growPart(target, chosenAction);
+			
+			result = tmp.ordinal() > result.ordinal() ? tmp : result;
+			
+			System.out.println("action: "+chosenAction.name() +" -> "+ result);
+			
+		}
+		
+		if(result == GrowPartResult.CONTINUE) {
+			grow(target);
+		}
+		
+	}
+	
+	public GrowPartResult growPart(BlockPos target, GrowAction action) {
+		IBlockState targetState = world.getBlockState(target);
 		
 		if(action == GrowAction.TRUNK_HEIGHT) {
 			if(world.isAirBlock(target)) {
@@ -62,13 +100,16 @@ public class TreeRootTE extends TileEntity implements ITickable {
 					world.setBlockState(target, newState, 2);
 					changeTrunkSectionCount(size, 1);
 					
-					return true;
+					return GrowPartResult.DONE;
 				}
 				
 			}
+			else if(targetState.getBlock() == PrimitiModBlocks.blockComplexLog) {
+				return GrowPartResult.CONTINUE;
+			}
 		}
 		else if(action == GrowAction.TRUNK_WIDTH) {
-			IBlockState targetState = world.getBlockState(target);
+			
 			
 			if(targetState.getBlock() == PrimitiModBlocks.blockComplexLog) {
 				
@@ -83,12 +124,16 @@ public class TreeRootTE extends TileEntity implements ITickable {
 					changeTrunkSectionCount(size-1	,  1);
 					changeTrunkSectionCount(size	, -1);
 					
-					return true;
+					return GrowPartResult.DONE;
+				}
+				else {
+					return GrowPartResult.CONTINUE;
 				}
 			}
+			
 		}
 		else if(action == GrowAction.BRANCH) {
-			IBlockState targetState = world.getBlockState(target);
+			
 			
 			if(targetState.getBlock() == PrimitiModBlocks.blockComplexLog) {
 				
@@ -116,86 +161,19 @@ public class TreeRootTE extends TileEntity implements ITickable {
 						}
 					}
 					
-					growBranch(target, target, newDir, size);
-					return true;
+					return growBranch(target, target, newDir, size);
 				}
 			}
+			return GrowPartResult.CONTINUE;
 		}
 		
 		
-		return false;
+		return GrowPartResult.STOP;
 	}
 	
 	
-	public void grow(BlockPos pos) {
-		
-		System.out.println("tsc: "+trunkSectionCount[0]+" "+trunkSectionCount[1]+" "+trunkSectionCount[2]);
-		
-		BlockPos target = pos.offset(EnumFacing.UP);
-		IBlockState targetState = world.getBlockState(target);
-		
-		if(world.isAirBlock(target)) {
-			int size = 2;
-			
-			if(trunkSectionCount[size] < trunkSectionMaxLength[size]) {
-				
-				IBlockState newState = PrimitiModBlocks.blockComplexLog.getDefaultState()
-						.withProperty(BlockComplexLog.LOG_AXIS, BlockLog.EnumAxis.fromFacingAxis(EnumFacing.UP.getAxis()))
-						.withProperty(BlockComplexLog.SIZE, size);
-				
-				world.setBlockState(target, newState, 2);
-				changeTrunkSectionCount(size, 1);
-			}
-			
-		}
-		else if(targetState.getBlock() == PrimitiModBlocks.blockComplexLog) {
-			
-			int size = targetState.getValue(BlockComplexLog.SIZE);
-				
-			if(canGrowBranch(target)) {
-				EnumFacing newDir = EnumFacing.HORIZONTALS[random.nextInt(4)];
-				
-				if(!canGrowMultiBranch) {
-					
-					for(EnumFacing e : EnumFacing.HORIZONTALS) {
-						BlockPos offsetTarget = target.offset(e);
-						IBlockState offsetState = world.getBlockState(offsetTarget);
-						
-						if(offsetState.getBlock() == PrimitiModBlocks.blockComplexLog) {
 
-							BlockLog.EnumAxis axis = offsetState.getValue(BlockLog.LOG_AXIS);
-							
-							if(axis == BlockLog.EnumAxis.fromFacingAxis(e.getAxis()) ) {
-								newDir = e;
-								break;
-							}
-						}
-						
-					}
-				}
-				
-				
-				growBranch(target, target, newDir, size);
-						
-			}
-			else if(size != 0 && isTrunkSectionMax(size) && !isTrunkSectionMax(size-1)) {
-			
-				IBlockState newState = PrimitiModBlocks.blockComplexLog.getDefaultState()
-						.withProperty(BlockComplexLog.SIZE, size - 1 );
-				
-				world.setBlockState(target, newState, 2);
-				changeTrunkSectionCount(size-1	,  1);
-				changeTrunkSectionCount(size	, -1);
-			}
-			else {
-				grow(target);
-			}
-			
-		}
-	}
-	
-
-	public void growBranch(final BlockPos trunkPos, BlockPos pos, EnumFacing facing, int size) {
+	public GrowPartResult growBranch(final BlockPos trunkPos, BlockPos pos, EnumFacing facing, int size) {
 		BlockPos target = pos.offset(facing);
 		IBlockState targetState = world.getBlockState(target);
 		
@@ -229,12 +207,15 @@ public class TreeRootTE extends TileEntity implements ITickable {
 				branchLengths[facing.getHorizontalIndex()]++;
 				branchLength.put(trunkPos, branchLengths);
 				
+				return GrowPartResult.DONE;
 			}
 			
 		}
 		else if(targetState.getBlock() == PrimitiModBlocks.blockComplexLog) {
-			growBranch(trunkPos, target, facing, size);
+			return growBranch(trunkPos, target, facing, size);
 		}
+		
+		return GrowPartResult.STOP;
 	}
 	
 
@@ -274,6 +255,19 @@ public class TreeRootTE extends TileEntity implements ITickable {
 	private enum GrowAction {
 		TRUNK_HEIGHT,
 		TRUNK_WIDTH,
-		BRANCH
+		BRANCH,
+		;
+		
+		public static int getLength() {
+			return values().length;
+		}
+	}
+	
+	private enum GrowPartResult {
+		STOP,
+		CONTINUE,
+		DONE,
+		;
+		
 	}
 }
