@@ -1,14 +1,15 @@
 package primitimod.tileentity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumSet;
 import java.util.Random;
 import java.util.Vector;
 import java.util.stream.IntStream;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -19,6 +20,9 @@ import primitimod.blocks.BlockComplexLog;
 
 public class TreeRootTE extends TileEntity implements ITickable {
 
+	private static final Block leavesBlock = Blocks.LEAVES; 
+	private static final Block logBlock = PrimitiModBlocks.blockComplexLog; 
+	
 	private static Random random = new Random();
 	
 	private int tickCounter;
@@ -91,32 +95,30 @@ public class TreeRootTE extends TileEntity implements ITickable {
 	
 	public GrowPartResult growPart(BlockPos target, GrowAction action) {
 		IBlockState targetState = world.getBlockState(target);
+		Block targetBlock = targetState.getBlock();
 		
 		if(action == GrowAction.TRUNK_HEIGHT) {
-			if(world.isAirBlock(target)) {
+			if(targetBlock == Blocks.AIR || targetBlock == leavesBlock ) {
 				int size = 2;
 				
 				if(trunkSectionCount[size] < trunkSectionMaxLength[size]) {
 					
-					IBlockState newState = PrimitiModBlocks.blockComplexLog.getDefaultState()
-							.withProperty(BlockComplexLog.LOG_AXIS, BlockLog.EnumAxis.fromFacingAxis(EnumFacing.UP.getAxis()))
-							.withProperty(BlockComplexLog.SIZE, size);
+					addLog(target, EnumFacing.UP, size);
 					
-					world.setBlockState(target, newState, 2);
 					changeTrunkSectionCount(size, 1);
 					
 					return GrowPartResult.DONE;
 				}
 				
 			}
-			else if(targetState.getBlock() == PrimitiModBlocks.blockComplexLog) {
+			else if(targetState.getBlock() == logBlock) {
 				return GrowPartResult.CONTINUE;
 			}
 		}
 		else if(action == GrowAction.TRUNK_WIDTH) {
 			
 			
-			if(targetState.getBlock() == PrimitiModBlocks.blockComplexLog) {
+			if(targetState.getBlock() == logBlock) {
 				
 				int size = targetState.getValue(BlockComplexLog.SIZE);
 				
@@ -140,7 +142,7 @@ public class TreeRootTE extends TileEntity implements ITickable {
 		else if(action == GrowAction.BRANCH) {
 			
 			
-			if(targetState.getBlock() == PrimitiModBlocks.blockComplexLog) {
+			if(targetState.getBlock() == logBlock) {
 				
 				int size = targetState.getValue(BlockComplexLog.SIZE);
 			
@@ -183,30 +185,51 @@ public class TreeRootTE extends TileEntity implements ITickable {
 	public GrowPartResult growBranch(final BlockPos trunkPos, final BlockPos pos, final EnumFacing facing, final int size, final int currentLength) {
 		BlockPos target = pos.offset(facing);
 		IBlockState targetState = world.getBlockState(target);
+		Block targetBlock = targetState.getBlock();
 		
-		if(world.isAirBlock(target)) {
+		if(targetBlock == Blocks.AIR || targetBlock == leavesBlock) {
+
+			int diff = getBranchMaxLength(target) - currentLength;
 			
-//			if(currentLength < branchMaxLength) {
-			if(currentLength < getBranchMaxLength(target)) {
-				
-				IBlockState newState = PrimitiModBlocks.blockComplexLog.getDefaultState()
-						.withProperty(BlockComplexLog.LOG_AXIS, BlockLog.EnumAxis.fromFacingAxis(facing.getAxis()))
-						.withProperty(BlockComplexLog.SIZE, size);
-				
-				world.setBlockState(target, newState, 2);
-				
+			if(diff > 0) {
+				addLog(target, facing, size);
 				return GrowPartResult.DONE;
 			}
 			
 		}
 		else if(targetState.getBlock() == PrimitiModBlocks.blockComplexLog) {
+			
+			if(targetState.getValue(BlockComplexLog.SIZE) != size) {
+				world.setBlockState(target, targetState.withProperty(BlockComplexLog.SIZE, size), 2);
+			}
+			
 			return growBranch(trunkPos, target, facing, size, currentLength + 1);
 		}
 		
 		return GrowPartResult.STOP;
 	}
 	
-
+	public void addLog(final BlockPos target, final EnumFacing facing, final int size) {
+		
+		IBlockState state = logBlock.getDefaultState()
+				.withProperty(BlockComplexLog.LOG_AXIS, BlockLog.EnumAxis.fromFacingAxis(facing.getAxis()))
+				.withProperty(BlockComplexLog.SIZE, size);
+		
+		world.setBlockState(target, state, 2);
+		
+		for(EnumFacing e : EnumFacing.values()) {
+			BlockPos targetOffset = target.offset(e);
+			if(world.isAirBlock(targetOffset)) { 
+				state = leavesBlock.getDefaultState()
+						.withProperty(BlockLeaves.DECAYABLE, false)
+						.withProperty(BlockLeaves.CHECK_DECAY, false);
+				
+				world.setBlockState(targetOffset, state, 2);
+			}
+		}
+	}
+	
+	
 	public boolean canGrowBranch(BlockPos target) {
 		int height = getHeight(target);
 		
@@ -216,7 +239,7 @@ public class TreeRootTE extends TileEntity implements ITickable {
 	}
 	
 	public int getBranchMaxLength(BlockPos target) {
-		return trunkMaxHeight - getHeight(target);
+		return (trunkMaxHeight - getHeight(target)) / 2;
 	}
 	
 	public int getHeight(BlockPos target) {
