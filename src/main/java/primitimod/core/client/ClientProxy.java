@@ -1,4 +1,4 @@
-package primitimod.client;
+package primitimod.core.client;
 
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -7,10 +7,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import primitimod.CommonProxy;
 import primitimod.PrimitiMod;
-import primitimod.PrimitiModBlocks;
-import primitimod.PrimitiModItems;
+import primitimod.core.CommonProxy;
+import primitimod.core.PrimitiModBlocks;
+import primitimod.core.PrimitiModItems;
 import primitimod.entity.EntityRock;
 import primitimod.entity.RenderFactory;
 

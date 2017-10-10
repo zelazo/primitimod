@@ -13,7 +13,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
-import primitimod.PrimitiModBlocks;
+import primitimod.core.PrimitiModBlocks;
 
 public class ItemStoneRock extends Item {
 

@@ -1,4 +1,4 @@
-package primitimod.blocks;
+package primitimod.trees.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -13,7 +13,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
-import primitimod.tileentity.TreeRootTE;
+import primitimod.trees.tileentity.TreeRootTE;
 
 public class BlockTreeRoot extends Block implements ITileEntityProvider {
 

@@ -23,7 +23,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
-import primitimod.PrimitiModItems;
+import primitimod.core.PrimitiModItems;
 
 public class BlockRockPile extends Block {
 		

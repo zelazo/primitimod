@@ -8,6 +8,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import primitimod.core.CommonProxy;
+import primitimod.core.PrimitiModTab;
 
 @Mod(modid = PrimitiMod.MODID, version = PrimitiMod.MODVERSION)
 public class PrimitiMod
@@ -16,7 +18,7 @@ public class PrimitiMod
 	public static final String MODNAME = "PrimitiMod";
     public static final String MODVERSION = "0.0.1";
     
-    @SidedProxy( clientSide = "primitimod.client.ClientProxy", serverSide = "primitimod.ServerProxy", modId = PrimitiMod.MODID )
+    @SidedProxy( clientSide = "primitimod.core.client.ClientProxy", serverSide = "primitimod.core.server.ServerProxy", modId = PrimitiMod.MODID )
     public static CommonProxy proxy;
     
     @Mod.Instance

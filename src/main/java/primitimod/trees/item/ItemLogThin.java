@@ -1,4 +1,4 @@
-package primitimod.items;
+package primitimod.trees.item;
 
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
@@ -17,8 +17,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
-import primitimod.PrimitiModBlocks;
-import primitimod.blocks.BlockComplexLog;
+import primitimod.core.PrimitiModBlocks;
+import primitimod.trees.block.BlockComplexLog;
 
 public class ItemLogThin extends Item {
 

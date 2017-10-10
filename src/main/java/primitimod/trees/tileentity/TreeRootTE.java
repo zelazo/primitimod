@@ -1,4 +1,4 @@
-package primitimod.tileentity;
+package primitimod.trees.tileentity;
 
 import java.util.Random;
 import java.util.Vector;
@@ -16,8 +16,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
-import primitimod.PrimitiModBlocks;
-import primitimod.blocks.BlockComplexLog;
+import primitimod.core.PrimitiModBlocks;
+import primitimod.trees.block.BlockComplexLog;
 import primitimod.utils.BlockPosUtils;
 
 public class TreeRootTE extends TileEntity implements ITickable {
@@ -28,9 +28,7 @@ public class TreeRootTE extends TileEntity implements ITickable {
 	private static Random random = new Random();
 	
 	private int tickCounter;
-	private final int updatePace = 20;
-
-//	private int[] trunkSectionCount = new int[] { 0, 0, 0 };
+	private static final int growthRate = 20;
 
 	private static int[] trunkSectionMaxLength = new int[] { 2, 3, 4 };
 	private static int trunkMaxHeight = IntStream.of(trunkSectionMaxLength).sum();
@@ -47,7 +45,7 @@ public class TreeRootTE extends TileEntity implements ITickable {
 		if (!world.isRemote) {
 			tickCounter++;
 			
-			if(tickCounter > updatePace) {
+			if(tickCounter > growthRate) {
 				System.out.println("tick!");
 
 				int[] trunkSectionCount = new int[] { 0, 0, 0 };
@@ -294,7 +292,7 @@ public class TreeRootTE extends TileEntity implements ITickable {
 	
 	public int getHeight(BlockPos target) {
 		int result = target.getY() - this.pos.getY();
-		return result < 1 ? 1 : result;
+		return result < 0 ? 0 : result;
 	}
 	
 	public boolean isTrunkSectionMax(int[] trunkSectionCount, int size) {
@@ -331,10 +329,6 @@ public class TreeRootTE extends TileEntity implements ITickable {
 		TRUNK_WIDTH,
 		BRANCH,
 		;
-		
-		public static int getLength() {
-			return values().length;
-		}
 	}
 	
 	private enum GrowPartResult {
@@ -342,6 +336,5 @@ public class TreeRootTE extends TileEntity implements ITickable {
 		CONTINUE,
 		DONE,
 		;
-		
 	}
 }

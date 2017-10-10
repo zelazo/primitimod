@@ -1,4 +1,4 @@
-package primitimod;
+package primitimod.core;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -13,14 +13,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import primitimod.blocks.BlockComplexLog;
+import primitimod.PrimitiMod;
 import primitimod.blocks.BlockRockPile;
 import primitimod.blocks.BlockSimple;
-import primitimod.blocks.BlockTreeRoot;
 import primitimod.entity.EntityRock;
-import primitimod.items.ItemLogThin;
 import primitimod.items.ItemStoneRock;
-import primitimod.tileentity.TreeRootTE;
+import primitimod.trees.block.BlockComplexLog;
+import primitimod.trees.block.BlockTreeRoot;
+import primitimod.trees.item.ItemLogThin;
+import primitimod.trees.tileentity.TreeRootTE;
 
 @Mod.EventBusSubscriber
 public class CommonProxy {

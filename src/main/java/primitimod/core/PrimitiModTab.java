@@ -1,8 +1,9 @@
-package primitimod;
+package primitimod.core;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import primitimod.PrimitiMod;
 
 public class PrimitiModTab extends CreativeTabs {
 

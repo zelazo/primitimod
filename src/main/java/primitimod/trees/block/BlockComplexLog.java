@@ -1,4 +1,4 @@
-package primitimod.blocks;
+package primitimod.trees.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
-import primitimod.PrimitiModBlocks;
+import primitimod.core.PrimitiModBlocks;
 
 public class BlockComplexLog extends BlockLog {
 

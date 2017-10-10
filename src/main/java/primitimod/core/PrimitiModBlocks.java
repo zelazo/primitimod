@@ -1,12 +1,13 @@
-package primitimod;
+package primitimod.core;
 
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import primitimod.blocks.BlockComplexLog;
+import primitimod.PrimitiMod;
 import primitimod.blocks.BlockRockPile;
 import primitimod.blocks.BlockSimple;
-import primitimod.blocks.BlockTreeRoot;
+import primitimod.trees.block.BlockComplexLog;
+import primitimod.trees.block.BlockTreeRoot;
 
 public class PrimitiModBlocks {
 

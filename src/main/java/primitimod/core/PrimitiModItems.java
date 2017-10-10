@@ -1,10 +1,11 @@
-package primitimod;
+package primitimod.core;
 
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import primitimod.items.ItemLogThin;
+import primitimod.PrimitiMod;
 import primitimod.items.ItemStoneRock;
+import primitimod.trees.item.ItemLogThin;
 
 public class PrimitiModItems {
 
