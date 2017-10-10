@@ -15,30 +15,30 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
 import primitimod.core.PrimitiModBlocks;
 import primitimod.trees.block.BlockComplexLog;
 import primitimod.utils.BlockPosUtils;
 
 public class TreeRootTE extends TileEntity implements ITickable {
 
-	private static final Block leavesBlock = Blocks.LEAVES; 
-	private static final Block logBlock = PrimitiModBlocks.blockComplexLog; 
+	protected Block leavesBlock = Blocks.LEAVES; 
+	protected Block logBlock = PrimitiModBlocks.blockComplexLog; 
+	protected int   growthRate = 20;
+	protected int[] trunkSectionMaxLength = new int[] { 2, 3, 4 };
+	protected int 	leavesMinHeight = 3;
+	protected int 	branchMinHeight = 3;
+	protected int 	branchHeightSpread = 2;
+	protected int   branchGrowthSpeed = 20;
+	protected boolean canGrowMultiBranch = true;
+	protected boolean canBranchSplit = true;
+	protected int branchSplitSpread = 2;
 	
-	private static Random random = new Random();
-	
-	private int tickCounter;
-	private static final int growthRate = 20;
+	protected int trunkMaxHeight = IntStream.of(trunkSectionMaxLength).sum();
 
-	private static int[] trunkSectionMaxLength = new int[] { 2, 3, 4 };
-	private static int trunkMaxHeight = IntStream.of(trunkSectionMaxLength).sum();
-	
-	private static final int leavesMinHeight = 3;
-	private static final int branchMinHeight = 3;
-	private static final int branchHeightSpread = 2;
-	private static final int branchGrowthSpeed = 20;
+	private static final Random random = new Random();
 	private static final int branchMaxGrowthSpeed = 100;
-	private static final boolean canGrowMultiBranch = true;
+	
+	/*NBTTag "tickCounter" */ private int tickCounter;
 	
 	@Override
 	public void update() {
@@ -103,37 +103,37 @@ public class TreeRootTE extends TileEntity implements ITickable {
 		
 	}
 	
-	public void grow(BlockPos pos, int[] trunkSectionCount) {
-		BlockPos target = getNextTrunkPos(pos);
 
-		System.out.println("height:"+ getHeight(target) +" tsc: "+trunkSectionCount[0]+" "+trunkSectionCount[1]+" "+trunkSectionCount[2]);
+	public void grow(BlockPos pos, int[] trunkSectionCount) {
+		GrowPartResult result = GrowPartResult.CONTINUE;
+		BlockPos target = pos;
 		
-		if(getHeight(target) > trunkMaxHeight) {
-			return;
-		}
-		
-		GrowPartResult result = GrowPartResult.STOP;
-		Vector<GrowAction> actions = new Vector<>();
-		actions.add(GrowAction.TRUNK_HEIGHT);
-		actions.add(GrowAction.BRANCH);
-		
-		while(! (result == GrowPartResult.DONE ||  actions.isEmpty()) ) {
-		
-			GrowAction chosenAction = actions.get(random.nextInt(actions.size()));
-			actions.remove(chosenAction);
-		
-			GrowPartResult tmp = growPart(target, chosenAction, trunkSectionCount);
+		while(result == GrowPartResult.CONTINUE) {
 			
-			result = tmp.ordinal() > result.ordinal() ? tmp : result;
+			target = getNextTrunkPos(target);
+			System.out.println("height:"+ getHeight(target) +" tsc: "+trunkSectionCount[0]+" "+trunkSectionCount[1]+" "+trunkSectionCount[2]);
 			
-			System.out.println("action: "+chosenAction.name() +" -> "+ result);
+			if(getHeight(target) > trunkMaxHeight) {
+				return;
+			}
 			
-		}
+			Vector<GrowAction> actions = new Vector<>();
+			actions.add(GrowAction.TRUNK_HEIGHT);
+			actions.add(GrowAction.BRANCH);
 		
-		if(result == GrowPartResult.CONTINUE) {
-			grow(target, trunkSectionCount);
+			while(! (result == GrowPartResult.DONE ||  actions.isEmpty()) ) {
+				
+				GrowAction chosenAction = actions.get(random.nextInt(actions.size()));
+				actions.remove(chosenAction);
+			
+				GrowPartResult tmp = growPart(target, chosenAction, trunkSectionCount);
+				
+				result = tmp.ordinal() > result.ordinal() ? tmp : result;
+				
+				System.out.println("action: "+chosenAction.name() +" -> "+ result);
+				
+			}
 		}
-		
 	}
 	
 	public GrowPartResult growPart(BlockPos target, GrowAction action, int[] trunkSectionCount) {
@@ -209,7 +209,8 @@ public class TreeRootTE extends TileEntity implements ITickable {
 			int diff = getBranchMaxLength(target) - currentLength;
 			
 			if(diff > 0) {
-				addLog(target, facing, size, true);
+				addLog(target, facing, size, !canBranchSplit);
+				
 				return GrowPartResult.DONE;
 			}
 			
@@ -218,6 +219,11 @@ public class TreeRootTE extends TileEntity implements ITickable {
 			
 			if(targetState.getValue(BlockComplexLog.SIZE) != size) {
 				world.setBlockState(target, targetState.withProperty(BlockComplexLog.SIZE, size), 2);
+			}
+			
+			if( canBranchSplit && (currentLength % branchSplitSpread == 1) ) {
+				EnumFacing sideway = random.nextBoolean() ? facing.rotateY() : facing.rotateYCCW();
+				addLog(target.offset(sideway), sideway, 2, true);
 			}
 			
 			return growBranch(trunkPos, target, facing, size, currentLength + 1);
@@ -262,13 +268,6 @@ public class TreeRootTE extends TileEntity implements ITickable {
 			}
 		}
 	}
-
-//	public BlockPos getNextTrunkPos(BlockPos target) {
-//		return target.offset(EnumFacing.UP);
-//	}
-//	public BlockPos getNextTrunkPos(BlockPos target) {
-//		return target.offset(EnumFacing.UP).offset(EnumFacing.HORIZONTALS[random.nextInt(4)]);
-//	}
 	
 	public BlockPos getNextTrunkPos(BlockPos target) {
 		return target.offset(EnumFacing.UP).offset(EnumFacing.HORIZONTALS[getHeight(target)%4]);
@@ -276,6 +275,14 @@ public class TreeRootTE extends TileEntity implements ITickable {
 	
 	public BlockPos getPrevTrunkPos(BlockPos target) {
 		return target.offset(EnumFacing.DOWN).offset( EnumFacing.HORIZONTALS[(getHeight(target.down()))%4].getOpposite() );
+	}
+
+	public BlockPos getNextBranchPos(BlockPos target, EnumFacing branchDir, int currentBranchLength) {
+		return null;
+	}
+	
+	public BlockPos getPrevBranchPos(BlockPos target, EnumFacing branchDir, int currentBranchLength) {
+		return null;
 	}
 	
 	public boolean canGrowBranch(BlockPos target) {

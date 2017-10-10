@@ -7,7 +7,8 @@ import primitimod.PrimitiMod;
 import primitimod.blocks.BlockRockPile;
 import primitimod.blocks.BlockSimple;
 import primitimod.trees.block.BlockComplexLog;
-import primitimod.trees.block.BlockTreeRoot;
+import primitimod.trees.block.BlockOakTreeRoot;
+import primitimod.trees.block.BlockPalmTreeRoot;
 
 public class PrimitiModBlocks {
 
@@ -20,14 +21,18 @@ public class PrimitiModBlocks {
     @GameRegistry.ObjectHolder(PrimitiMod.MODID+":complexlog")
     public static BlockComplexLog blockComplexLog;
 
-    @GameRegistry.ObjectHolder(PrimitiMod.MODID+":treeroot")
-    public static BlockTreeRoot blockTreeRoot;
+    @GameRegistry.ObjectHolder(PrimitiMod.MODID+":oaktreeroot")
+    public static BlockOakTreeRoot blockOakTreeRoot;
+    
+    @GameRegistry.ObjectHolder(PrimitiMod.MODID+":palmtreeroot")
+    public static BlockPalmTreeRoot blockPalmTreeRoot;
     
     @SideOnly(Side.CLIENT)
     public static void initModels() {
     	blockRockPile.initModel();
     	blockSimple.initModel();
     	blockComplexLog.initModel();
-    	blockTreeRoot.initModel();
+    	blockOakTreeRoot.initModel();
+    	blockPalmTreeRoot.initModel();
     }
 }

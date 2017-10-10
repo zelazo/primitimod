@@ -6,29 +6,21 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
-import primitimod.trees.tileentity.TreeRootTE;
 
-public class BlockTreeRoot extends Block implements ITileEntityProvider {
+public abstract class BlockTreeRoot extends Block implements ITileEntityProvider {
 
-	public BlockTreeRoot() {
+	public BlockTreeRoot(String registryName) {
         super(Material.GROUND);
         setCreativeTab(PrimitiMod.tab);
-        setRegistryName("treeroot");
-        setUnlocalizedName(getRegistryName().toString());
-       
+        setRegistryName(registryName);
+        setUnlocalizedName(registryName);
     }
-
-	@Override
-	public TileEntity createNewTileEntity(World world, int meta) {
-		return new TreeRootTE();
-	}
 	
 	@Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
