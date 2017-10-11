@@ -11,13 +11,13 @@ public class PrimitiModItems {
 
     @GameRegistry.ObjectHolder(PrimitiMod.MODID+":stonerock")
     public static ItemStoneRock itemStoneRock;
-    @GameRegistry.ObjectHolder(PrimitiMod.MODID+":logthin")
-    public static ItemLogThin itemLogThin;
+//    @GameRegistry.ObjectHolder(PrimitiMod.MODID+":logthin")
+//    public static ItemLogThin itemLogThin;
 
     @SideOnly(Side.CLIENT)
     public static void initModels() {
         itemStoneRock.initModel();
-        itemLogThin.initModel();
+//        itemLogThin.initModel();
     }
     
 }

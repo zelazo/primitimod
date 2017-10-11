@@ -3,6 +3,7 @@ package primitimod.core;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -45,7 +46,8 @@ public class CommonProxy {
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         event.getRegistry().register(new BlockRockPile());
         event.getRegistry().register(new BlockSimple());
-        event.getRegistry().register(new BlockComplexLog());
+        event.getRegistry().register(new BlockComplexLog("oaklog"));
+        event.getRegistry().register(new BlockComplexLog("palmlog"));
         event.getRegistry().register(new BlockOakTreeRoot("oaktreeroot"));
         event.getRegistry().register(new BlockPalmTreeRoot("palmtreeroot"));
     }
@@ -54,16 +56,38 @@ public class CommonProxy {
     public static void registerItems(RegistryEvent.Register<Item> event) {
     	
     	event.getRegistry().register(new ItemStoneRock());
-    	event.getRegistry().register(new ItemLogThin());
-        event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockSimple).setRegistryName(PrimitiModBlocks.blockSimple.getRegistryName()));
+//    	event.getRegistry().register(new ItemLogThin());
     }
     
     @SubscribeEvent
     public static void registerItemBlocks(final RegistryEvent.Register<Item> event) {
-//    	event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockComplexLog).setRegistryName(PrimitiModBlocks.blockComplexLog.getRegistryName()+"_item"));
-//    	event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockTreeRoot).setRegistryName(PrimitiModBlocks.blockTreeRoot.getRegistryName()));
+    	event.getRegistry().register(
+    			new ItemBlock(PrimitiModBlocks.blockOakLog) {
+    				@Override
+    				public String getUnlocalizedName(ItemStack stack) {
+    				    return BlockComplexLog.getUnlocalizedItemBlockName(super.getUnlocalizedName(), stack.getItemDamage());
+    				}
+    			}
+    			.setRegistryName(PrimitiModBlocks.blockOakLog.getRegistryName()+"_item")
+    			.setHasSubtypes(true)
+    			.setCreativeTab(PrimitiMod.tab)
+    			
+    	);
+    	
+    	event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockPalmLog) {
+					@Override
+					public String getUnlocalizedName(ItemStack stack) {
+					    return BlockComplexLog.getUnlocalizedItemBlockName(super.getUnlocalizedName(), stack.getItemDamage());
+					}
+				}
+    			.setRegistryName(PrimitiModBlocks.blockPalmLog.getRegistryName()+"_item")
+    			.setHasSubtypes(true)
+    			.setCreativeTab(PrimitiMod.tab)
+    	);
+
     	event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockOakTreeRoot).setRegistryName(PrimitiModBlocks.blockOakTreeRoot.getRegistryName()));
     	event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockPalmTreeRoot).setRegistryName(PrimitiModBlocks.blockPalmTreeRoot.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockSimple).setRegistryName(PrimitiModBlocks.blockSimple.getRegistryName()));
     }
     
     @SubscribeEvent

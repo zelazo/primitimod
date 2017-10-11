@@ -67,7 +67,7 @@ public class ItemLogThin extends Item {
 
     		if(target.getBlock().isAir(target, world, newPos)) {
 
-    			world.setBlockState(newPos, PrimitiModBlocks.blockComplexLog.getDefaultState()
+    			world.setBlockState(newPos, PrimitiModBlocks.blockOakLog.getDefaultState()
     					.withProperty(BlockComplexLog.SIZE, itemStack.getItemDamage())
     					.withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.fromFacingAxis(facing.getAxis()))
 				);

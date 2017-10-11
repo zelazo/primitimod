@@ -11,7 +11,7 @@ public final class OakTreeRootTE extends TreeRootTE {
 
 	public OakTreeRootTE() {
 		this.leavesBlock = Blocks.LEAVES; 
-		this.logBlock = PrimitiModBlocks.blockComplexLog; 
+		this.logBlock = PrimitiModBlocks.blockOakLog; 
 		this.growthRate = 20;
 		this.trunkSectionMaxLength = new int[] { 3, 4, 5 };
 		this.trunkMaxHeight = IntStream.of(trunkSectionMaxLength).sum();

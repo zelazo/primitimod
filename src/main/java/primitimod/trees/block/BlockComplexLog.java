@@ -7,14 +7,19 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
@@ -22,8 +27,9 @@ import primitimod.core.PrimitiModBlocks;
 
 public class BlockComplexLog extends BlockLog {
 
+	public static final int MIN_SIZE = 0;
 	public static final int MAX_SIZE = 3;
-	public static final PropertyInteger SIZE = PropertyInteger.create("size", 0, MAX_SIZE);
+	public static final PropertyInteger SIZE = PropertyInteger.create("size", MIN_SIZE, MAX_SIZE);
 
     public static final PropertyBool NORTH = PropertyBool.create("north");
     public static final PropertyBool EAST = PropertyBool.create("east");
@@ -63,22 +69,22 @@ public class BlockComplexLog extends BlockLog {
     }
 
     
-    public BlockComplexLog() {
+    public BlockComplexLog(String registryName) {
         super();
         setCreativeTab(PrimitiMod.tab);
-        setRegistryName("complexlog");
+        setRegistryName(registryName);
         setUnlocalizedName(getRegistryName().toString());
         setDefaultState(this.blockState.getBaseState()
         		.withProperty(SIZE, 0)
         		.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
-        
     }
     
     @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer,
     		ItemStack stack) {
-//    	super.onBlockPlacedBy(world, pos, state, placer, stack);
-    	world.setBlockState(pos, state.withProperty(SIZE, 0), 2);
+    	super.onBlockPlacedBy(world, pos, state, placer, stack);
+    	
+    	world.setBlockState(pos, state.withProperty(BlockComplexLog.SIZE, stack.getItemDamage()) );
     }
     
     @Override
@@ -142,7 +148,7 @@ public class BlockComplexLog extends BlockLog {
         IBlockState state = world.getBlockState(other);
         Block block = state.getBlock();
         
-        if(block == PrimitiModBlocks.blockComplexLog) {
+        if(block == this) {
         
 	        switch(facing) {
 	        	case DOWN:
@@ -160,6 +166,20 @@ public class BlockComplexLog extends BlockLog {
         return false;
     }
     
+
+    public static String getUnlocalizedItemBlockName(String blockName, int meta) {
+    	meta = meta % (MAX_SIZE + 1);
+    	String suffix = "undefined";
+    	
+    	switch(meta) {
+    	case 0: suffix = "large"; break;
+    	case 1: suffix = "medium"; break;
+    	case 2: suffix = "small"; break;
+    	}
+    	
+    	return blockName + "." + suffix;
+    }
+    
     @Override
     protected BlockStateContainer createBlockState() {
     	
@@ -168,8 +188,19 @@ public class BlockComplexLog extends BlockLog {
 
     @SideOnly(Side.CLIENT)
     public void initModel() {
-//        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName()+"_item", "type=0"));
+    	
+    	for(int i = MIN_SIZE; i < MAX_SIZE; i++) {
+    		System.out.println("registering BlockComplexLog("+getRegistryName()+") model variant: size=: "+i);
+    		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), i, new ModelResourceLocation(getRegistryName()+"_item", "size="+i));    	
+    	}
     }
+    
+    @Override
+	public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
+    	for(int i = MIN_SIZE; i < MAX_SIZE; i++) {
+    		items.add(new ItemStack(this, 1, i));
+    	}
+	}
     
     @Override
     public boolean isOpaqueCube(IBlockState state) { 

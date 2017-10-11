@@ -5,7 +5,7 @@ import net.minecraft.world.World;
 import primitimod.PrimitiMod;
 import primitimod.trees.tileentity.PalmTreeRootTE;
 
-public class BlockPalmTreeRoot extends BlockTreeRoot {
+public final class BlockPalmTreeRoot extends BlockTreeRoot {
 	
 	public BlockPalmTreeRoot(String registryName) {
         super(registryName);

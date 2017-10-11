@@ -18,21 +18,28 @@ public class PrimitiModBlocks {
     @GameRegistry.ObjectHolder(PrimitiMod.MODID+":simple")
     public static BlockSimple blockSimple;
 
-    @GameRegistry.ObjectHolder(PrimitiMod.MODID+":complexlog")
-    public static BlockComplexLog blockComplexLog;
-
     @GameRegistry.ObjectHolder(PrimitiMod.MODID+":oaktreeroot")
     public static BlockOakTreeRoot blockOakTreeRoot;
     
     @GameRegistry.ObjectHolder(PrimitiMod.MODID+":palmtreeroot")
     public static BlockPalmTreeRoot blockPalmTreeRoot;
     
+
+    @GameRegistry.ObjectHolder(PrimitiMod.MODID+":oaklog")
+    public static BlockComplexLog blockOakLog;
+    
+    @GameRegistry.ObjectHolder(PrimitiMod.MODID+":palmlog")
+    public static BlockComplexLog blockPalmLog;
+    
+    
     @SideOnly(Side.CLIENT)
     public static void initModels() {
     	blockRockPile.initModel();
     	blockSimple.initModel();
-    	blockComplexLog.initModel();
     	blockOakTreeRoot.initModel();
     	blockPalmTreeRoot.initModel();
+    	
+    	blockPalmLog.initModel();
+    	blockOakLog.initModel();
     }
 }

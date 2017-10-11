@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "primitimod:treeroot"
+    "model": "primitimod:palm_treeroot"
   },
   "variants": {
     "normal": [{}],

@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "primitimod:treeroot"
+    "model": "primitimod:oak_treeroot"
   },
   "variants": {
     "normal": [{}],
