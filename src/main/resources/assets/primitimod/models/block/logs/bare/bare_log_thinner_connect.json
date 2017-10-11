@@ -1,0 +1,7 @@
+{
+    "parent": "primitimod:block/logs/log_thinner_connect",
+    "textures": {
+        "end": "blocks/log_jungle_top",
+        "side": "blocks/log_jungle_top"
+    }
+}

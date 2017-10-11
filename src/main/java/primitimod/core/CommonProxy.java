@@ -17,12 +17,12 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import primitimod.PrimitiMod;
 import primitimod.blocks.BlockRockPile;
 import primitimod.blocks.BlockSimple;
+import primitimod.core.registry.LogItemBlock;
 import primitimod.entity.EntityRock;
 import primitimod.items.ItemStoneRock;
 import primitimod.trees.block.BlockComplexLog;
 import primitimod.trees.block.BlockOakTreeRoot;
 import primitimod.trees.block.BlockPalmTreeRoot;
-import primitimod.trees.item.ItemLogThin;
 import primitimod.trees.tileentity.OakTreeRootTE;
 import primitimod.trees.tileentity.PalmTreeRootTE;
 
@@ -48,6 +48,7 @@ public class CommonProxy {
         event.getRegistry().register(new BlockSimple());
         event.getRegistry().register(new BlockComplexLog("oaklog"));
         event.getRegistry().register(new BlockComplexLog("palmlog"));
+        event.getRegistry().register(new BlockComplexLog("barelog"));
         event.getRegistry().register(new BlockOakTreeRoot("oaktreeroot"));
         event.getRegistry().register(new BlockPalmTreeRoot("palmtreeroot"));
     }
@@ -61,29 +62,9 @@ public class CommonProxy {
     
     @SubscribeEvent
     public static void registerItemBlocks(final RegistryEvent.Register<Item> event) {
-    	event.getRegistry().register(
-    			new ItemBlock(PrimitiModBlocks.blockOakLog) {
-    				@Override
-    				public String getUnlocalizedName(ItemStack stack) {
-    				    return BlockComplexLog.getUnlocalizedItemBlockName(super.getUnlocalizedName(), stack.getItemDamage());
-    				}
-    			}
-    			.setRegistryName(PrimitiModBlocks.blockOakLog.getRegistryName()+"_item")
-    			.setHasSubtypes(true)
-    			.setCreativeTab(PrimitiMod.tab)
-    			
-    	);
-    	
-    	event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockPalmLog) {
-					@Override
-					public String getUnlocalizedName(ItemStack stack) {
-					    return BlockComplexLog.getUnlocalizedItemBlockName(super.getUnlocalizedName(), stack.getItemDamage());
-					}
-				}
-    			.setRegistryName(PrimitiModBlocks.blockPalmLog.getRegistryName()+"_item")
-    			.setHasSubtypes(true)
-    			.setCreativeTab(PrimitiMod.tab)
-    	);
+    	event.getRegistry().register(new LogItemBlock(PrimitiModBlocks.blockOakLog));
+    	event.getRegistry().register(new LogItemBlock(PrimitiModBlocks.blockPalmLog));
+    	event.getRegistry().register(new LogItemBlock(PrimitiModBlocks.blockBareLog));
 
     	event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockOakTreeRoot).setRegistryName(PrimitiModBlocks.blockOakTreeRoot.getRegistryName()));
     	event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockPalmTreeRoot).setRegistryName(PrimitiModBlocks.blockPalmTreeRoot.getRegistryName()));

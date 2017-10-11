@@ -30,7 +30,9 @@ public class PrimitiModBlocks {
     
     @GameRegistry.ObjectHolder(PrimitiMod.MODID+":palmlog")
     public static BlockComplexLog blockPalmLog;
-    
+
+    @GameRegistry.ObjectHolder(PrimitiMod.MODID+":barelog")
+    public static BlockComplexLog blockBareLog;
     
     @SideOnly(Side.CLIENT)
     public static void initModels() {
@@ -41,5 +43,6 @@ public class PrimitiModBlocks {
     	
     	blockPalmLog.initModel();
     	blockOakLog.initModel();
+    	blockBareLog.initModel();
     }
 }

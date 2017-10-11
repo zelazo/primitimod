@@ -1,0 +1,97 @@
+{
+	"forge_marker": 0,
+    "multipart": [
+		{  
+        	"when" : { "size" : 0, "axis" : "y" }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_big" }
+        },
+        {  
+        	"when" : { "size" : 0, "axis" : "x" }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_big", "x": 90, "y": 90 }
+        },
+        {  
+        	"when" : { "size" : 0, "axis" : "z" }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_big", "x": 90 }
+        }
+		
+		,
+	
+        {  
+        	"when" : { "size" : 1, "axis" : "y" }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thin" }
+        },
+        {  
+        	"when" : { "size" : 1, "axis" : "x" }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thin", "x": 90, "y": 90 }
+        },
+        {  
+        	"when" : { "size" : 1, "axis" : "z" }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thin", "x": 90 }
+        },
+        
+        {  
+        	"when" : { "OR" : [ { "size" : 1, "axis" : "x", "down" : "true" }, { "size" : 1, "axis" : "z", "down" : "true" } ] }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thin_connect" }
+        },
+        {  
+        	"when" : { "OR" : [ { "size" : 1, "axis" : "x", "up" : "true" }, { "size" : 1, "axis" : "z", "up" : "true" } ] }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thin_connect", "x" : 180 }
+        },
+        {  
+        	"when" : { "OR" : [ { "size" : 1, "axis" : "x", "north" : "true" }, { "size" : 1, "axis" : "y", "north" : "true" } ] }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thin_connect", "x" : 270 }
+        },
+        {  
+        	"when" : { "OR" : [ { "size" : 1, "axis" : "x", "south" : "true" }, { "size" : 1, "axis" : "y", "south" : "true" } ] }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thin_connect", "x" : 90 }
+        },
+        {  
+        	"when" : { "OR" : [ { "size" : 1, "axis" : "z", "east" : "true" }, { "size" : 1, "axis" : "y", "east" : "true" } ] }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thin_connect", "x" : 270, "y" : 90 }
+        },
+        {  
+        	"when" : { "OR" : [ { "size" : 1, "axis" : "z", "west" : "true" }, { "size" : 1, "axis" : "y", "west" : "true" } ] }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thin_connect", "x" : 90, "y" : 90 }
+        }
+        
+    ,
+        
+        {  
+        	"when" : { "size" : 2, "axis" : "y" }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thinner" }
+        },
+        {  
+        	"when" : { "size" : 2, "axis" : "x" }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thinner", "x": 90, "y": 90 }
+        },
+        {  
+        	"when" : { "size" : 2, "axis" : "z" }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thinner", "x": 90 }
+        },
+        
+        {  
+        	"when" : { "OR" : [ { "size" : 2, "axis" : "x", "down" : "true" }, { "size" : 2, "axis" : "z", "down" : "true" } ] }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thinner_connect" }
+        },
+        {  
+        	"when" : { "OR" : [ { "size" : 2, "axis" : "x", "up" : "true" }, { "size" : 2, "axis" : "z", "up" : "true" } ] }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thinner_connect", "x" : 180 }
+        },
+        {  
+        	"when" : { "OR" : [ { "size" : 2, "axis" : "x", "north" : "true" }, { "size" : 2, "axis" : "y", "north" : "true" } ] }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thinner_connect", "x" : 270 }
+        },
+        {  
+        	"when" : { "OR" : [ { "size" : 2, "axis" : "x", "south" : "true" }, { "size" : 2, "axis" : "y", "south" : "true" } ] }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thinner_connect", "x" : 90 }
+        },
+        {  
+        	"when" : { "OR" : [ { "size" : 2, "axis" : "z", "east" : "true" }, { "size" : 2, "axis" : "y", "east" : "true" } ] }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thinner_connect", "x" : 270, "y" : 90 }
+        },
+        {  
+        	"when" : { "OR" : [ { "size" : 2, "axis" : "z", "west" : "true" }, { "size" : 2, "axis" : "y", "west" : "true" } ] }, 
+        	"apply": { "model": "primitimod:logs/bare/bare_log_thinner_connect", "x" : 90, "y" : 90 }
+        }
+    ]
+}
