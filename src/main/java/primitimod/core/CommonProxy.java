@@ -3,7 +3,6 @@ package primitimod.core;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -19,8 +18,10 @@ import primitimod.blocks.BlockRockPile;
 import primitimod.blocks.BlockSimple;
 import primitimod.core.registry.LogItemBlock;
 import primitimod.entity.EntityRock;
+import primitimod.items.ItemAxe;
 import primitimod.items.ItemStoneRock;
 import primitimod.trees.block.BlockComplexLog;
+import primitimod.trees.block.BlockFallingLeaves;
 import primitimod.trees.block.BlockOakTreeRoot;
 import primitimod.trees.block.BlockPalmTreeRoot;
 import primitimod.trees.tileentity.OakTreeRootTE;
@@ -51,13 +52,15 @@ public class CommonProxy {
         event.getRegistry().register(new BlockComplexLog("barelog"));
         event.getRegistry().register(new BlockOakTreeRoot("oaktreeroot"));
         event.getRegistry().register(new BlockPalmTreeRoot("palmtreeroot"));
+
+        event.getRegistry().register(new BlockFallingLeaves("oakleaves"));
     }
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
     	
     	event.getRegistry().register(new ItemStoneRock());
-//    	event.getRegistry().register(new ItemLogThin());
+    	event.getRegistry().register(new ItemAxe());
     }
     
     @SubscribeEvent
@@ -69,6 +72,9 @@ public class CommonProxy {
     	event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockOakTreeRoot).setRegistryName(PrimitiModBlocks.blockOakTreeRoot.getRegistryName()));
     	event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockPalmTreeRoot).setRegistryName(PrimitiModBlocks.blockPalmTreeRoot.getRegistryName()));
         event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockSimple).setRegistryName(PrimitiModBlocks.blockSimple.getRegistryName()));
+        
+        event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockOakLeaves).setRegistryName(PrimitiModBlocks.blockOakLeaves.getRegistryName()));
+        
     }
     
     @SubscribeEvent

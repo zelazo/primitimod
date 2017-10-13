@@ -1,9 +1,11 @@
 package primitimod.core.client;
 
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -22,7 +24,14 @@ public class ClientProxy extends CommonProxy {
         super.preInit(e);
         
         OBJLoader.INSTANCE.addDomain(PrimitiMod.MODID);
-
+        
+    }
+	
+	@Override
+    public void init(FMLInitializationEvent e) {
+        super.init(e);
+        
+        ColorManager.registerColourHandlers();
         
     }
 	

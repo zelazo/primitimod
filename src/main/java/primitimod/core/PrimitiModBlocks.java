@@ -1,5 +1,6 @@
 package primitimod.core;
 
+import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -7,6 +8,7 @@ import primitimod.PrimitiMod;
 import primitimod.blocks.BlockRockPile;
 import primitimod.blocks.BlockSimple;
 import primitimod.trees.block.BlockComplexLog;
+import primitimod.trees.block.BlockFallingLeaves;
 import primitimod.trees.block.BlockOakTreeRoot;
 import primitimod.trees.block.BlockPalmTreeRoot;
 
@@ -34,6 +36,10 @@ public class PrimitiModBlocks {
     @GameRegistry.ObjectHolder(PrimitiMod.MODID+":barelog")
     public static BlockComplexLog blockBareLog;
     
+
+    @GameRegistry.ObjectHolder(PrimitiMod.MODID+":oakleaves")
+    public static BlockFallingLeaves blockOakLeaves;
+    
     @SideOnly(Side.CLIENT)
     public static void initModels() {
     	blockRockPile.initModel();
@@ -44,5 +50,13 @@ public class PrimitiModBlocks {
     	blockPalmLog.initModel();
     	blockOakLog.initModel();
     	blockBareLog.initModel();
+    	
+    	blockOakLeaves.initModel();
+    }
+    
+    public static boolean isLog(Block block) {
+    	return block == blockOakLog ||
+    		   block == blockPalmLog
+    		   ;
     }
 }

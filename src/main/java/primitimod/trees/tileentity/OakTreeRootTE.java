@@ -10,7 +10,7 @@ import primitimod.core.PrimitiModBlocks;
 public final class OakTreeRootTE extends TreeRootTE {
 
 	public OakTreeRootTE() {
-		this.leavesBlock = Blocks.LEAVES; 
+		this.leavesBlock = PrimitiModBlocks.blockOakLeaves;//Blocks.LEAVES; 
 		this.logBlock = PrimitiModBlocks.blockOakLog; 
 		this.growthRate = 20;
 		this.trunkSectionMaxLength = new int[] { 3, 4, 5 };

@@ -259,9 +259,9 @@ public class TreeRootTE extends TileEntity implements ITickable {
 			for(EnumFacing e : EnumFacing.values()) {
 				BlockPos targetOffset = target.offset(e);
 				if(world.isAirBlock(targetOffset)) { 
-					state = leavesBlock.getDefaultState()
-							.withProperty(BlockLeaves.DECAYABLE, false)
-							.withProperty(BlockLeaves.CHECK_DECAY, false);
+					state = leavesBlock.getDefaultState();
+//							.withProperty(BlockLeaves.DECAYABLE, false)
+//							.withProperty(BlockLeaves.CHECK_DECAY, false);
 					
 					world.setBlockState(targetOffset, state, 2);
 				}
