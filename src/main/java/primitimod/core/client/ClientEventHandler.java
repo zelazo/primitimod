@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderSpecificHandEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -19,28 +20,39 @@ import primitimod.items.ItemHeavyAxe;
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid = PrimitiMod.MODID)
 public class ClientEventHandler {
 	
-	@SubscribeEvent
-	public static void onFOVUpdate(final FOVUpdateEvent event) {
-		if (event.getEntity().isHandActive() && event.getEntity().getActiveItemStack().getItem() instanceof ItemHeavyAxe) {
-			
-			float fovModifier = event.getEntity().getItemInUseMaxCount() / 20.0f;
-
-			if (fovModifier > 1.0f) {
-				fovModifier = 1.0f;
-			} else {
-				fovModifier *= fovModifier;
-			}
-
-			event.setNewfov(event.getFov() * (1.0f - fovModifier * 0.15f));
-		}
-	}
+//	@SubscribeEvent
+//	public static void onFOVUpdate(final FOVUpdateEvent event) {
+//		if (event.getEntity().isHandActive() && event.getEntity().getActiveItemStack().getItem() instanceof ItemHeavyAxe) {
+//			
+//			float fovModifier = event.getEntity().getItemInUseMaxCount() / 20.0f;
+//
+//			if (fovModifier > 1.0f) {
+//				fovModifier = 1.0f;
+//			} else {
+//				fovModifier *= fovModifier;
+//			}
+//
+//			event.setNewfov(event.getFov() * (1.0f - fovModifier * 0.15f));
+//		}
+//	}
 	
+//	@SubscribeEvent
+//	public static void renderHandEvent(RenderHandEvent event)
+//	{
+//		System.out.println("RenderHandEvent");
+//	}
 
-	@SubscribeEvent
-	  public void playerRenderEvent(RenderPlayerEvent event) {
-
-		System.out.println("handRenderEvent");
-	}
+//	@SubscribeEvent
+//	  public static void renderPlayerEvent(RenderPlayerEvent event) {
+//
+//		System.out.println("RenderPlayerEvent");
+//	}
+	
+//	@SubscribeEvent
+//	  public static void renderSpecHandEvent(RenderSpecificHandEvent event) {
+//
+//		System.out.println("RenderSpecificHandEvent");
+//	}
 	
 //	@SubscribeEvent
 //	  public void handRenderEvent(RenderSpecificHandEvent event) {

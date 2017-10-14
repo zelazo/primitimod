@@ -80,6 +80,12 @@ public class BlockComplexLog extends BlockLog {
     }
     
     @Override
+    public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
+    	// TODO Auto-generated method stub
+    	return 250;
+    }
+    
+    @Override
     public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer,
     		ItemStack stack) {
     	super.onBlockPlacedBy(world, pos, state, placer, stack);
@@ -215,6 +221,51 @@ public class BlockComplexLog extends BlockLog {
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) { 
     	return EnumBlockRenderType.MODEL;
+    }
+    
+    public enum EnumLogType {
+    	BIG(0),
+    	MEDIUM(1),
+    	SMALL(2),
+    	DAMAGED(3);
+    	
+    	private int index;
+    	
+    	private EnumLogType(int index) {
+			this.index = index;
+		}
+
+		public int getIndex() {
+			return index;
+		}
+
+		public EnumLogType getBigger() {
+			switch(this) {
+				case BIG: 
+				case MEDIUM:
+					return BIG;
+				case SMALL:
+					return MEDIUM;
+				case DAMAGED:
+					return DAMAGED;
+				default:
+					return this;
+			}
+		}
+		
+		public EnumLogType getSmaller() {
+			switch(this) {
+				case SMALL: 
+				case MEDIUM:
+					return SMALL;
+				case BIG:
+					return MEDIUM;
+				case DAMAGED:
+					return DAMAGED;
+				default:
+					return this;
+			}
+		}
     }
     
 

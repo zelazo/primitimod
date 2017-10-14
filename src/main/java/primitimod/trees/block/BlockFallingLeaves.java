@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -69,6 +70,12 @@ public class BlockFallingLeaves extends BlockFalling {
     public void onEndFalling(World worldIn, BlockPos pos, IBlockState p_176502_3_, IBlockState p_176502_4_)
     {
     	System.out.println("end falling!");
+    }
+    
+    @Override
+    public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
+    	// TODO Auto-generated method stub
+    	return 250;
     }
 	
 	/**
@@ -143,6 +150,11 @@ public class BlockFallingLeaves extends BlockFalling {
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass)
     {
         return BiomeColorHelper.getFoliageColorAtPos(worldIn, pos);
+    }
+    
+    @Override
+    public int getDustColor(IBlockState state) {
+    	return getRenderColor(state);//MapColor.FOLIAGE.colorValue;
     }
     
     

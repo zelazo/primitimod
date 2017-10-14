@@ -1,7 +1,7 @@
 {
-    "parent": "block/jungle_log",
+    "parent": "block/cube_column",
     "textures": {
-        "end": "blocks/log_jungle_top",
-        "side": "blocks/log_jungle_top"
+        "end": "blocks/log_oak_top",
+        "side": "primitimod:blocks/log_oak_hit"
     }
 }
