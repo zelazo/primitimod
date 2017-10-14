@@ -18,7 +18,6 @@ import primitimod.blocks.BlockRockPile;
 import primitimod.blocks.BlockSimple;
 import primitimod.core.registry.LogItemBlock;
 import primitimod.entity.EntityRock;
-import primitimod.items.ItemAxe;
 import primitimod.items.ItemHeavyAxe;
 import primitimod.items.ItemStoneRock;
 import primitimod.trees.block.BlockComplexLog;
@@ -61,7 +60,6 @@ public class CommonProxy {
     public static void registerItems(RegistryEvent.Register<Item> event) {
     	
     	event.getRegistry().register(new ItemStoneRock());
-    	event.getRegistry().register(new ItemAxe());
     	event.getRegistry().register(new ItemHeavyAxe());
     }
     

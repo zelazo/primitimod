@@ -1,9 +1,12 @@
 package primitimod.trees.block;
 
+import java.util.EnumSet;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -14,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -23,14 +27,15 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
-import primitimod.core.PrimitiModBlocks;
 
 public class BlockComplexLog extends BlockLog {
 
-	public static final int MIN_SIZE = 0;
-	public static final int MAX_SIZE = 3;
-	public static final PropertyInteger SIZE = PropertyInteger.create("size", MIN_SIZE, MAX_SIZE);
-
+//	public static final int MIN_SIZE = 0;
+//	public static final int MAX_SIZE = 3;
+//	public static final PropertyInteger SIZE2 = PropertyInteger.create("size", MIN_SIZE, MAX_SIZE);
+//	public static final PropertyEnum<EnumLogType> TYPE2 = PropertyEnum<EnumLogType>.create("size", BlockComplexLog.EnumLogType.class);
+	public static final PropertyEnum<BlockComplexLog.EnumLogType> TYPE = PropertyEnum.<BlockComplexLog.EnumLogType>create("type", BlockComplexLog.EnumLogType.class);
+	
     public static final PropertyBool NORTH = PropertyBool.create("north");
     public static final PropertyBool EAST = PropertyBool.create("east");
     public static final PropertyBool SOUTH = PropertyBool.create("south");
@@ -63,7 +68,7 @@ public class BlockComplexLog extends BlockLog {
     {
         state = this.getActualState(state, source, pos);
         int i = state.getValue(BlockLog.LOG_AXIS).ordinal();
-        int j = state.getValue(SIZE);
+        int j = state.getValue(TYPE).getIndex();
         
         return BOUNDING_BOXES[i][j];
     }
@@ -75,13 +80,12 @@ public class BlockComplexLog extends BlockLog {
         setRegistryName(registryName);
         setUnlocalizedName(getRegistryName().toString());
         setDefaultState(this.blockState.getBaseState()
-        		.withProperty(SIZE, 0)
+        		.withProperty(TYPE, EnumLogType.LARGE)
         		.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
     }
     
     @Override
     public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
-    	// TODO Auto-generated method stub
     	return 250;
     }
     
@@ -90,13 +94,13 @@ public class BlockComplexLog extends BlockLog {
     		ItemStack stack) {
     	super.onBlockPlacedBy(world, pos, state, placer, stack);
     	
-    	world.setBlockState(pos, state.withProperty(BlockComplexLog.SIZE, stack.getItemDamage()) );
+    	world.setBlockState(pos, state.withProperty(TYPE, EnumLogType.getByIndex(stack.getItemDamage())) );
     }
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
     	
-    	IBlockState iblockstate = this.getDefaultState().withProperty(SIZE, meta & 3);
+    	IBlockState iblockstate = this.getDefaultState().withProperty(TYPE, EnumLogType.getByIndex(meta & 3));
     	
         switch (meta & 12)
         {
@@ -120,7 +124,7 @@ public class BlockComplexLog extends BlockLog {
     public int getMetaFromState(IBlockState state) {
     	
     	byte b0 = 0;
-        int i = b0 | state.getValue(SIZE);
+        int i = b0 | state.getValue(TYPE).getIndex();
 
         switch (BlockComplexLog.SwitchEnumAxis.AXIS_LOOKUP[((BlockComplexLog.EnumAxis)state.getValue(LOG_AXIS)).ordinal()])
         {
@@ -174,14 +178,8 @@ public class BlockComplexLog extends BlockLog {
     
 
     public static String getUnlocalizedItemBlockName(String blockName, int meta) {
-    	meta = meta % (MAX_SIZE + 1);
-    	String suffix = "undefined";
-    	
-    	switch(meta) {
-    	case 0: suffix = "large"; break;
-    	case 1: suffix = "medium"; break;
-    	case 2: suffix = "small"; break;
-    	}
+    	meta = meta % (EnumLogType.getCount());
+    	String suffix = EnumLogType.getByIndex(meta).getName();
     	
     	return blockName + "." + suffix;
     }
@@ -189,22 +187,22 @@ public class BlockComplexLog extends BlockLog {
     @Override
     protected BlockStateContainer createBlockState() {
     	
-        return new BlockStateContainer(this, new IProperty[] { LOG_AXIS, SIZE, UP, DOWN, NORTH, SOUTH, EAST, WEST });
+        return new BlockStateContainer(this, new IProperty[] { LOG_AXIS, TYPE, UP, DOWN, NORTH, SOUTH, EAST, WEST });
     }
 
     @SideOnly(Side.CLIENT)
     public void initModel() {
     	
-    	for(int i = MIN_SIZE; i < MAX_SIZE; i++) {
-    		System.out.println("registering BlockComplexLog("+getRegistryName()+") model variant: size=: "+i);
-    		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), i, new ModelResourceLocation(getRegistryName()+"_item", "size="+i));    	
+    	for(EnumLogType type : EnumSet.of(EnumLogType.LARGE, EnumLogType.MEDIUM, EnumLogType.SMALL)) {
+    		System.out.println("registering BlockComplexLog("+getRegistryName()+") model variant: size=: "+type.getIndex());
+    		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.getIndex(), new ModelResourceLocation(getRegistryName()+"_item", "size="+type.getIndex()));    	
     	}
     }
     
     @Override
 	public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
-    	for(int i = MIN_SIZE; i < MAX_SIZE; i++) {
-    		items.add(new ItemStack(this, 1, i));
+    	for(EnumLogType type : EnumSet.of(EnumLogType.LARGE, EnumLogType.MEDIUM, EnumLogType.SMALL)) {
+    		items.add(new ItemStack(this, 1, type.getIndex()));
     	}
 	}
     
@@ -223,27 +221,43 @@ public class BlockComplexLog extends BlockLog {
     	return EnumBlockRenderType.MODEL;
     }
     
-    public enum EnumLogType {
-    	BIG(0),
-    	MEDIUM(1),
-    	SMALL(2),
-    	DAMAGED(3);
+    public enum EnumLogType implements IStringSerializable {
+    	LARGE(0, "large"),
+    	MEDIUM(1, "medium"),
+    	SMALL(2, "small"),
+    	DAMAGED(3, "damaged");
     	
     	private int index;
+    	private String name;
     	
-    	private EnumLogType(int index) {
+    	private EnumLogType(int index, String name) {
 			this.index = index;
+			this.name = name;
 		}
 
 		public int getIndex() {
 			return index;
 		}
+		
+		public static int getCount() {
+			return EnumLogType.values().length;
+		}
+		
+		public static EnumLogType getByIndex(int index) {
+			return values()[index];
+		}
+		
+		@Override
+		public String getName() {
+			return name;
+		}
+
 
 		public EnumLogType getBigger() {
 			switch(this) {
-				case BIG: 
+				case LARGE: 
 				case MEDIUM:
-					return BIG;
+					return LARGE;
 				case SMALL:
 					return MEDIUM;
 				case DAMAGED:
@@ -258,7 +272,7 @@ public class BlockComplexLog extends BlockLog {
 				case SMALL: 
 				case MEDIUM:
 					return SMALL;
-				case BIG:
+				case LARGE:
 					return MEDIUM;
 				case DAMAGED:
 					return DAMAGED;
@@ -266,6 +280,7 @@ public class BlockComplexLog extends BlockLog {
 					return this;
 			}
 		}
+
     }
     
 

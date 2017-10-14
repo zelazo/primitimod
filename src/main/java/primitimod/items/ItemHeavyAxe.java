@@ -89,23 +89,24 @@ public class ItemHeavyAxe extends Item {
 	    	
 	    	if( PrimitiModBlocks.isLog(target.getBlock()) ) {
 	    		
-	    		int size = target.getValue(BlockComplexLog.SIZE);
+	    		if(target.getValue(BlockComplexLog.TYPE) == BlockComplexLog.EnumLogType.DAMAGED) {
+		    		System.out.println("axe hit!");
+		    		BlockPos toCut = findBlockToCut(world, pos);
+		    		
+		    		cutLog(world, toCut);
+		    		
+		    		return true;
+		    	}
+	    		else {
 	    		
-    			world.setBlockState(pos, PrimitiModBlocks.blockBareLog.getDefaultState()
-					.withProperty(BlockComplexLog.LOG_AXIS, target.getValue(BlockComplexLog.LOG_AXIS))
-					.withProperty(BlockComplexLog.SIZE, size < 2 ? size + 1 : size ) 
-				);
-	    			
-    			player.getHeldItemMainhand().damageItem(1, player);
-    			return true;
-	    	}
-	    	else if(target.getBlock() == PrimitiModBlocks.blockBareLog) {
-	    		System.out.println("axe hit!");
-	    		BlockPos toCut = findBlockToCut(world, pos);
-	    		
-	    		cutLog(world, toCut);
-	    		
-	    		return true;
+	    			world.setBlockState(pos, target
+						.withProperty(BlockComplexLog.TYPE, BlockComplexLog.EnumLogType.DAMAGED ) 
+					);
+		    			
+	    			player.getHeldItemMainhand().damageItem(1, player);
+	    			return true;
+		    	}
+		    	
 	    	}
     	}
     	
