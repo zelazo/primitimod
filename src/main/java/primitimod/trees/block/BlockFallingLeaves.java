@@ -74,7 +74,6 @@ public class BlockFallingLeaves extends BlockFalling {
     
     @Override
     public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
-    	// TODO Auto-generated method stub
     	return 250;
     }
 	

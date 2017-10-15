@@ -30,10 +30,6 @@ import primitimod.PrimitiMod;
 
 public class BlockComplexLog extends BlockLog {
 
-//	public static final int MIN_SIZE = 0;
-//	public static final int MAX_SIZE = 3;
-//	public static final PropertyInteger SIZE2 = PropertyInteger.create("size", MIN_SIZE, MAX_SIZE);
-//	public static final PropertyEnum<EnumLogType> TYPE2 = PropertyEnum<EnumLogType>.create("size", BlockComplexLog.EnumLogType.class);
 	public static final PropertyEnum<BlockComplexLog.EnumLogType> TYPE = PropertyEnum.<BlockComplexLog.EnumLogType>create("type", BlockComplexLog.EnumLogType.class);
 	
     public static final PropertyBool NORTH = PropertyBool.create("north");
