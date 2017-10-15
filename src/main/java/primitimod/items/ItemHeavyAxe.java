@@ -2,41 +2,37 @@ package primitimod.items;
 
 import java.util.EnumSet;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityEgg;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
 import primitimod.core.PrimitiModBlocks;
 import primitimod.trees.block.BlockComplexLog;
-import primitimod.utils.RandUtil;
 
 public class ItemHeavyAxe extends Item {
 
@@ -46,6 +42,7 @@ public class ItemHeavyAxe extends Item {
         setMaxStackSize(1);
         setMaxDamage(100);
         setUnlocalizedName(getRegistryName().toString());
+        setHarvestLevel("axe", 1);
         
     }
 
@@ -60,26 +57,95 @@ public class ItemHeavyAxe extends Item {
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase entityLiving, int timeLeft) {
         if (entityLiving instanceof EntityPlayer) {
-            EntityPlayer entityplayer = (EntityPlayer)entityLiving;
+            EntityPlayer player = (EntityPlayer)entityLiving;
+            
+            
 
             int power = this.getMaxItemUseDuration(stack) - timeLeft;
             
             if(power > 25) {
                 
 	        	if (!world.isRemote) {
-	                RayTraceResult ray = entityplayer.rayTrace(3.0d, 0.2f);
+	                RayTraceResult ray = player.rayTrace(3.0d, 0.2f);
 	                BlockPos hitPos = ray.getBlockPos();
 	                IBlockState hitBlockState = world.getBlockState(hitPos);
-//	                
-	                world.playEvent(2001, hitPos, Block.getStateId(hitBlockState));
 
-		            world.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, entityplayer.getSoundCategory(), 1.0F, 1.0F);
-		            entityplayer.spawnSweepParticles();
+	                hitBlock(player, world, ray.getBlockPos());
+
+	                int damage = setToolDamage(world, player, hitBlockState, hitPos);
 	                
-	                hitBlock(entityplayer, world, ray.getBlockPos());
+	                if(damage > 0) {
+	                	world.playEvent(2001, hitPos, Block.getStateId(hitBlockState));
+	                }
+	                
+		            world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, player.getSoundCategory(), 1.0F, 1.0F);
+		            spawnSweepParticles(world, player);
+	                
+	                
 	        	}
             }
+            else {
+            	if (!world.isRemote) {
+                	world.getMinecraftServer().getCommandManager().executeCommand(player, "/time set day");
+                	world.getMinecraftServer().getCommandManager().executeCommand(player, "/weather clear");
+            	}
+            }
         }
+    }
+    
+    public int setToolDamage(World world, EntityPlayer player, IBlockState state, BlockPos pos) {
+
+    	String harvestTool = state.getBlock().getHarvestTool(state);
+        ItemStack heldItem = player.getHeldItemMainhand();
+        
+		int damage = 1;
+		
+		if(getHarvestLevel(heldItem, harvestTool, player, state) < 0) {
+			damage = getDamageFromHarvestLevel(state.getBlockHardness(world, pos));
+		}
+		
+        System.out.println("damage: "+damage);
+        
+        heldItem.damageItem(damage, player);
+        
+        return damage;
+    }
+    
+    public int getDamageFromHarvestLevel(float hardness) {
+    	int damage = 1;
+    	
+		if(hardness > 50) {
+			damage = 0;
+		}
+		else if(hardness > 20) {
+			damage = 10;
+		}
+		else if(hardness > 4) {
+			damage = 5;
+		}
+		else if(hardness >= 2) {
+			damage = 3;
+		}
+		else if(hardness > 0) {
+			damage = 2;
+		}
+		else {
+			damage = 0; 
+		}
+		
+		return damage;
+    }
+    
+    public void spawnSweepParticles(World world, EntityPlayer player) {
+    	double d0 = (double)(-MathHelper.sin(player.rotationYaw * 0.017453292F));
+        double d1 = (double)MathHelper.cos(player.rotationYaw * 0.017453292F);
+        double d2 = (double)(-MathHelper.sin(player.rotationPitch * 0.017453292F));
+        
+        if (world instanceof WorldServer) {
+            ((WorldServer)world).spawnParticle(EnumParticleTypes.SWEEP_ATTACK, player.posX + d0, player.posY + (double)player.eyeHeight * 0.9D * (1.0D + d2), player.posZ + d1, 0, d0, 0.0D, d1, 0.0D);
+//            ((WorldServer)world).spawnParticle(EnumParticleTypes.SWEEP_ATTACK, player.posX + d0, player.posY + (double)player.eyeHeight * 0.9D + (double)player.eyeHeight * 0.9D * d2, player.posZ + d1, 0, d0, 0.0D, d1, 0.0D);
+        }
+        
     }
     
     public boolean hitBlock(EntityPlayer player, World world, BlockPos pos) {
@@ -91,7 +157,7 @@ public class ItemHeavyAxe extends Item {
 	    		
 	    		if(target.getValue(BlockComplexLog.TYPE) == BlockComplexLog.EnumLogType.DAMAGED) {
 		    		System.out.println("axe hit!");
-		    		BlockPos toCut = findBlockToCut(world, pos);
+		    		BlockPos toCut = findBlockToCut(world, pos, target.getBlock());
 		    		
 		    		cutLog(world, toCut);
 		    		
@@ -103,7 +169,6 @@ public class ItemHeavyAxe extends Item {
 						.withProperty(BlockComplexLog.TYPE, BlockComplexLog.EnumLogType.DAMAGED ) 
 					);
 		    			
-	    			player.getHeldItemMainhand().damageItem(1, player);
 	    			return true;
 		    	}
 		    	
@@ -141,8 +206,7 @@ public class ItemHeavyAxe extends Item {
         return 50;
     }
     
-    public BlockPos findBlockToCut(World world, BlockPos hitBlock) {
-    	Block logBlockType = null;
+    public BlockPos findBlockToCut(World world, BlockPos hitBlock, Block blockType) {
     	BlockPos target = hitBlock;
     	BlockPos result = hitBlock;
     	IBlockState hitState = world.getBlockState(hitBlock);
@@ -150,39 +214,36 @@ public class ItemHeavyAxe extends Item {
     	boolean done = false;
     	
     	if(hitState.getBlock() == Blocks.AIR) {
-    		return hitBlock;
+    		return target;
     	}
     	
     	while(!done) {
-    		
-    		target = target.up();
+
+			target = target.up();
     		targetState = world.getBlockState(target);
     		
     		done = true;
-    		if(targetState.getBlock() == logBlockType && targetState.getValue(BlockComplexLog.LOG_AXIS) == BlockLog.EnumAxis.Y) 
+    		if(targetState.getBlock() == blockType && targetState.getValue(BlockComplexLog.LOG_AXIS) == BlockLog.EnumAxis.Y) 
     		{
     			result = target;
     			done = false;
     		}
     		else {
     			for(EnumFacing facing : EnumFacing.HORIZONTALS) {
-    				target = target.offset(facing);
-    				targetState = world.getBlockState(target);
-
-    				if(logBlockType == null && PrimitiModBlocks.isLog(targetState.getBlock())) {
-    					logBlockType = targetState.getBlock();
-    				}
     				
+    				targetState = world.getBlockState(target.offset(facing));
     				
-    				if(targetState.getBlock() == logBlockType && 
+    				if(targetState.getBlock() == blockType && 
 					   targetState.getValue(BlockComplexLog.LOG_AXIS) == BlockLog.EnumAxis.Y) 
     				{
+    					target = target.offset(facing);
     					result = target;
     	    			done = false;
     	    			break;
     	    		}
         		}
     		}
+
     	}
     	
     	return result;
@@ -193,7 +254,6 @@ public class ItemHeavyAxe extends Item {
     	Block blockType = targetState.getBlock();
     	BlockPos offsetPos = null;
     	IBlockState offsetState = null;
-    	BlockLog.EnumAxis axis = null;
     	EnumFacing branchFacing = null;
     	
     	for(EnumFacing facing : EnumFacing.HORIZONTALS) {
@@ -202,22 +262,16 @@ public class ItemHeavyAxe extends Item {
 
     		if(offsetState.getBlock() == targetState.getBlock()) {
     		   if (offsetState.getValue(BlockComplexLog.LOG_AXIS) == BlockLog.EnumAxis.fromFacingAxis(facing.getAxis()) ) {
-//	    			target = offsetPos;
 	    			branchFacing = facing;
-	    			
 	    			break;
 	    		}
     		}
-    		
     	}
-    	
-    	System.out.println("branch facing: "+branchFacing);
     	
     	if(branchFacing == null) {
     		world.destroyBlock(target, true);
     	}
     	else {
-//    		target = offsetPos;
     		while(true) {
     			target = target.offset(branchFacing);
 				targetState = world.getBlockState(target);
@@ -240,14 +294,7 @@ public class ItemHeavyAxe extends Item {
 				    	}
 					}
 				}
-				
-    			
-    			
     		}
     	}
-    	
-    	
     }
-    
-
 }

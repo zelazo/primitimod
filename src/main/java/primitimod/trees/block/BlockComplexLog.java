@@ -4,6 +4,7 @@ import java.util.EnumSet;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
@@ -167,6 +168,9 @@ public class BlockComplexLog extends BlockLog {
 	        	case WEST:
 	        		return state.getValue(LOG_AXIS) == BlockLog.EnumAxis.X;
 	        }
+        }
+        else if(state.getMaterial() == Material.LEAVES ) {
+        	return true;
         }
         
         return false;

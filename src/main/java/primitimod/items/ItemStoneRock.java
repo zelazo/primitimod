@@ -21,7 +21,6 @@ public class ItemStoneRock extends Item {
 		setCreativeTab(PrimitiMod.tab);
         setRegistryName("stonerock");
         setMaxStackSize(16);
-//        setUnlocalizedName(PrimitiMod.MODID + ".stonerock");
         setUnlocalizedName(getRegistryName().toString());
     }
 
