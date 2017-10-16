@@ -14,6 +14,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ColorizerFoliage;
@@ -66,10 +67,8 @@ public class BlockFallingLeaves extends BlockFalling {
         }
     }
 	
-
-    public void onEndFalling(World worldIn, BlockPos pos, IBlockState p_176502_3_, IBlockState p_176502_4_)
-    {
-    	System.out.println("end falling!");
+	@Override
+    public void onEndFalling(World worldIn, BlockPos pos, IBlockState p_176502_3_, IBlockState p_176502_4_) {
     }
     
     @Override
@@ -80,17 +79,20 @@ public class BlockFallingLeaves extends BlockFalling {
 	/**
      * Used to determine ambient occlusion and culling when rebuilding chunks for render
      */
+    @Override
     public boolean isOpaqueCube(IBlockState state)
     {
         return !this.leavesFancy;
     }
     
     @Nullable
+    @Override
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
     {
         return NULL_AABB;
     }
-
+    
+    @Override
     public boolean isFullCube(IBlockState state)
     {
         return false;
@@ -99,6 +101,7 @@ public class BlockFallingLeaves extends BlockFalling {
     /**
      * Called When an Entity Collided with the Block
      */
+    @Override
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
     {
         entityIn.motionX *= 0.7D;
@@ -153,7 +156,23 @@ public class BlockFallingLeaves extends BlockFalling {
     
     @Override
     public int getDustColor(IBlockState state) {
-    	return getRenderColor(state);//MapColor.FOLIAGE.colorValue;
+    	return getBlockColor();//getRenderColor(state);//MapColor.FOLIAGE.colorValue;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+    {
+        if (worldIn.isRainingAt(pos.up()) && !worldIn.getBlockState(pos.down()).isSideSolid(worldIn, pos, EnumFacing.UP) && rand.nextInt(15) == 1)
+        {
+            double d0 = (double)((float)pos.getX() + rand.nextFloat());
+            double d1 = (double)pos.getY() - 0.05D;
+            double d2 = (double)((float)pos.getZ() + rand.nextFloat());
+            worldIn.spawnParticle(EnumParticleTypes.DRIP_WATER, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+        }
+        else {
+        	super.randomDisplayTick(stateIn, worldIn, pos, rand);
+        }
     }
     
     

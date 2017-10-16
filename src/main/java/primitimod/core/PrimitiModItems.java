@@ -5,12 +5,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
 import primitimod.items.ItemHeavyAxe;
+import primitimod.items.ItemLumber;
 import primitimod.items.ItemStoneRock;
 
 public class PrimitiModItems {
 
     @GameRegistry.ObjectHolder(PrimitiMod.MODID+":stonerock")
     public static ItemStoneRock itemStoneRock;
+    
+    @GameRegistry.ObjectHolder(PrimitiMod.MODID+":lumber")
+    public static ItemLumber itemLumber;
 
     @GameRegistry.ObjectHolder(PrimitiMod.MODID+":lumberheavyaxe")
     public static ItemHeavyAxe itemHeavyAxe;
@@ -18,6 +22,7 @@ public class PrimitiModItems {
     @SideOnly(Side.CLIENT)
     public static void initModels() {
         itemStoneRock.initModel();
+        itemLumber.initModel();
         itemHeavyAxe.initModel();
     }
     

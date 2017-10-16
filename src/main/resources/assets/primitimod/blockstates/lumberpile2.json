@@ -1,0 +1,38 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+  	"model": "primitimod:lumber",
+  	"textures": {
+      "side": "primitimod:blocks/log_oak_hit"
+    }
+  },
+  "variants": {
+  	"pilesize" : {
+	    "0": { "model": "primitimod:lumber" },
+	    "1" : { "submodel": {
+	            "lumber1": { "model": "primitimod:lumber" },
+	            "lumber2": { "model": "primitimod:lumber", "transform" : { "translation" : [ 0.1875, 0.0, 0.0] } } }
+	    },
+	    "2" : { "submodel": {
+	            "lumber1": { "model": "primitimod:lumber" },
+	            "lumber2": { "model": "primitimod:lumber", "transform" : { "translation" : [ 0.1875, 0.0, 0.0] } },
+	            "lumber3": { "model": "primitimod:lumber", "transform" : { "translation" : [ 0.3750, 0.0, 0.0] } } }
+	    },
+	    "3" : { "submodel": {
+	            "lumber1": { "model": "primitimod:lumber" },
+	            "lumber2": { "model": "primitimod:lumber", "transform" : { "translation" : [ 0.1875, 0.0, 0.0] } },
+	            "lumber3": { "model": "primitimod:lumber", "transform" : { "translation" : [ 0.3750, 0.0, 0.0] } },
+	            "lumber4": { "model": "primitimod:lumber", "transform" : { "translation" : [ 0.5625, 0.0, 0.0] } } }
+	    },
+	    "4" : {
+	    },
+	    "5" : {
+	    },
+	    "6" : {
+	    },
+	    "7" : {
+	    }
+	    
+    }
+  }
+}

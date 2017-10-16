@@ -1,0 +1,53 @@
+{
+    "forge_marker": 1,
+    "textures": {
+        "particle": "#side"
+    },
+    "elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 2, 2, 16 ],
+            "shade": true,
+            "faces": {
+                "down":  { "uv": [ 0, 0, 2, 16 ], "texture": "#side"  },
+                "up":    { "uv": [ 0, 0, 2, 16 ], "texture": "#side"  },
+                "west":  { "uv": [ 0, 0, 2, 16 ], "texture": "#side", "rotation" : 90 },
+                "east":  { "uv": [ 0, 0, 2, 16 ], "texture": "#side", "rotation" : 270 },
+                "north": { "uv": [ 7, 7, 9, 9 ], "texture": "#side" },
+                "south": { "uv": [ 7, 7, 9, 9 ], "texture": "#side" }
+            }
+        }
+        
+    ],
+    "display": {
+      "firstperson_righthand": {
+        "rotation" : [ 90, 0, 0 ],
+        "translation" : [7, 3, 7],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "thirdperson_righthand": {
+        "rotation" : [ 90, 0, 0 ],
+        "translation" : [7, 3, 7],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "firstperson_lefthand": {
+        "rotation" : [ 0.0, 0.0, 0.0 ],
+        "translation" : [0.0, 0.5, -0.1],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "thirdperson_lefthand": {
+		"rotation" : [ 0.0, 0.0, 0.0 ],
+        "translation" : [0.0, 0.5, -0.1],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      },
+      "gui": {
+		"rotation": [ 90, -45, 45 ],
+		"translation": [ 0, 0, 0],
+		"scale": [ 1.5, 1.5, 1.0 ]
+	  },
+      "ground": {
+        "rotation" : [ 90, 0, 0 ],
+        "translation" : [7, 3, 7],
+        "scale": [ 1.0, 1.0, 1.0 ]
+      }
+    }
+}

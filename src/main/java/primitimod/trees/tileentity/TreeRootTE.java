@@ -47,7 +47,7 @@ public class TreeRootTE extends TileEntity implements ITickable {
 			tickCounter++;
 			
 			if(tickCounter > growthRate) {
-				System.out.println("tick!");
+//				System.out.println("tick!");
 
 				int[] trunkSectionCount = new int[] { 0, 0, 0 };
 				
@@ -111,7 +111,7 @@ public class TreeRootTE extends TileEntity implements ITickable {
 		while(result == GrowPartResult.CONTINUE) {
 			
 			target = getNextTrunkPos(target);
-			System.out.println("height:"+ getHeight(target) +" tsc: "+trunkSectionCount[0]+" "+trunkSectionCount[1]+" "+trunkSectionCount[2]);
+//			System.out.println("height:"+ getHeight(target) +" tsc: "+trunkSectionCount[0]+" "+trunkSectionCount[1]+" "+trunkSectionCount[2]);
 			
 			if(getHeight(target) > trunkMaxHeight) {
 				return;
@@ -130,7 +130,7 @@ public class TreeRootTE extends TileEntity implements ITickable {
 				
 				result = tmp.ordinal() > result.ordinal() ? tmp : result;
 				
-				System.out.println("action: "+chosenAction.name() +" -> "+ result);
+//				System.out.println("action: "+chosenAction.name() +" -> "+ result);
 				
 			}
 		}

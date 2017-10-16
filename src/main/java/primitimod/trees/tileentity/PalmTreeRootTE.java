@@ -9,7 +9,7 @@ import primitimod.core.PrimitiModBlocks;
 public final class PalmTreeRootTE extends TreeRootTE {
 
 	public PalmTreeRootTE() {
-		this.leavesBlock = PrimitiModBlocks.blockOakLeaves; 
+		this.leavesBlock = PrimitiModBlocks.blockPalmLeaves; 
 		this.logBlock = PrimitiModBlocks.blockPalmLog; 
 		this.growthRate = 20;
 		this.trunkSectionMaxLength = new int[] { 4, 3, 2 };

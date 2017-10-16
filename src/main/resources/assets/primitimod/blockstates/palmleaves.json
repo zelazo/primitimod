@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "primitimod:palm_leaves"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

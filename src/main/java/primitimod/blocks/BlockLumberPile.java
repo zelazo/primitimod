@@ -1,6 +1,7 @@
 package primitimod.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLog;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -25,19 +26,24 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
 import primitimod.core.PrimitiModItems;
 
-public class BlockRockPile extends Block {
+public class BlockLumberPile extends Block {
 		
-	public static final int MAX_PILESIZE = 8;
+	public static final int MAX_PILESIZE = 16;
 	public static final PropertyInteger PILESIZE = PropertyInteger.create("pilesize", 0, MAX_PILESIZE-1);
 
-	public static final AxisAlignedBB bb = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.0625D, 1.0D);
+	protected static final AxisAlignedBB[] BOUNDING_BOXES = new AxisAlignedBB[] {
+		new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D),
+		new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.250D, 1.0D),
+		new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D),
+		new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.500D, 1.0D)
+    };
 	
-    public BlockRockPile() {
-        super(Material.ROCK);
+    public BlockLumberPile() {
+        super(Material.WOOD);
         setCreativeTab(PrimitiMod.tab);
-        setRegistryName("rockpile");
-        setHardness(10f);
-        setHarvestLevel("shovel", 0);
+        setRegistryName("lumberpile");
+        setHardness(1f);
+        setHarvestLevel("axe", 0);
         setUnlocalizedName(getRegistryName().toString());
         
         setDefaultState(blockState.getBaseState().withProperty(PILESIZE, 0));
@@ -46,7 +52,9 @@ public class BlockRockPile extends Block {
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        return bb;
+        int i = state.getValue(PILESIZE) / 4;
+        
+        return BOUNDING_BOXES[i];
     }
 
     @SideOnly(Side.CLIENT)
@@ -69,26 +77,37 @@ public class BlockRockPile extends Block {
 
 	    	ItemStack playerItemStack = player.getHeldItemMainhand();
 	    	Item playerItem = playerItemStack.getItem();
-	    	Item pileItem = PrimitiModItems.itemStoneRock;
+	    	Item pileItem = PrimitiModItems.itemLumber;
+
+	    	if(playerItem == pileItem) {
+	    		
+		    	int itemAmount = 1;
+				if(player.isSneaking()) {
+					itemAmount = player.getHeldItemMainhand().getCount();
+				}
+				
+				int newPileSize = pileSize + itemAmount;
+				newPileSize = newPileSize >= MAX_PILESIZE ? MAX_PILESIZE - 1 : newPileSize;
+				
 	    	
-	    	if(playerItem.equals(pileItem)) {
-	    		if(pileSize < MAX_PILESIZE - 1) {
-	        		world.setBlockState(pos, state.withProperty(PILESIZE, pileSize + 1));
-	        		playerItemStack.shrink(1);
-	        	}
+        		world.setBlockState(pos, state.withProperty(PILESIZE, newPileSize));
+        		playerItemStack.shrink(newPileSize - pileSize);
 	    	}
 	    	else if(playerItem.equals(Items.AIR)) {
 	    		
-    			if(pileSize > 0) {
-    				world.setBlockState(pos, state.withProperty(PILESIZE, pileSize - 1));
+	    		int itemAmount = 1;
+	    		
+    			if(player.isSneaking() || pileSize == 0) {
+    				world.setBlockToAir(pos);
+    				itemAmount = pileSize + 1;
     			}
     			else {
-    				world.setBlockToAir(pos);
+    				world.setBlockState(pos, state.withProperty(PILESIZE, pileSize - 1));
     			}
     			
-        		BlockPos entityPos = pos.add(0.5d, 0.0d, 0.5d);//.up();
+        		BlockPos entityPos = pos;//.add(0.5d, 0.0d, 0.5d);//.up();
         		EntityItem spawnEntityItem = new EntityItem(world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), 
-        				new ItemStack(pileItem, 1));
+        				new ItemStack(pileItem, itemAmount));
         		
         		world.spawnEntity(spawnEntityItem);
 	        	

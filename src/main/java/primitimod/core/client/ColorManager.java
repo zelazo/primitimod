@@ -32,6 +32,7 @@ public class ColorManager {
 		};
 
 		blockColors.registerBlockColorHandler(grassColourHandler, PrimitiModBlocks.blockOakLeaves);
+		blockColors.registerBlockColorHandler(grassColourHandler, PrimitiModBlocks.blockPalmLeaves);
 	}
 
 	private static void registerItemColourHandlers(final BlockColors blockColors, final ItemColors itemColors) {
@@ -43,5 +44,6 @@ public class ColorManager {
 		};
 
 		itemColors.registerItemColorHandler(itemBlockColourHandler, PrimitiModBlocks.blockOakLeaves);
+		itemColors.registerItemColorHandler(itemBlockColourHandler, PrimitiModBlocks.blockPalmLeaves);
 	}
 }

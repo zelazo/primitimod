@@ -14,11 +14,13 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import primitimod.PrimitiMod;
+import primitimod.blocks.BlockLumberPile;
 import primitimod.blocks.BlockRockPile;
 import primitimod.blocks.BlockSimple;
 import primitimod.core.registry.LogItemBlock;
 import primitimod.entity.EntityRock;
 import primitimod.items.ItemHeavyAxe;
+import primitimod.items.ItemLumber;
 import primitimod.items.ItemStoneRock;
 import primitimod.trees.block.BlockComplexLog;
 import primitimod.trees.block.BlockFallingLeaves;
@@ -46,6 +48,7 @@ public class CommonProxy {
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         event.getRegistry().register(new BlockRockPile());
+        event.getRegistry().register(new BlockLumberPile());
         event.getRegistry().register(new BlockSimple());
         event.getRegistry().register(new BlockComplexLog("oaklog"));
         event.getRegistry().register(new BlockComplexLog("palmlog"));
@@ -54,12 +57,14 @@ public class CommonProxy {
         event.getRegistry().register(new BlockPalmTreeRoot("palmtreeroot"));
 
         event.getRegistry().register(new BlockFallingLeaves("oakleaves"));
+        event.getRegistry().register(new BlockFallingLeaves("palmleaves"));
     }
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
     	
     	event.getRegistry().register(new ItemStoneRock());
+    	event.getRegistry().register(new ItemLumber());
     	event.getRegistry().register(new ItemHeavyAxe());
     }
     
@@ -74,6 +79,7 @@ public class CommonProxy {
         event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockSimple).setRegistryName(PrimitiModBlocks.blockSimple.getRegistryName()));
         
         event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockOakLeaves).setRegistryName(PrimitiModBlocks.blockOakLeaves.getRegistryName()));
+        event.getRegistry().register(new ItemBlock(PrimitiModBlocks.blockPalmLeaves).setRegistryName(PrimitiModBlocks.blockPalmLeaves.getRegistryName()));
         
     }
     
