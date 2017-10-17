@@ -23,7 +23,7 @@ import primitimod.utils.BlockPosUtils;
 public class TreeRootTE extends TileEntity implements ITickable {
 
 	protected Block leavesBlock = Blocks.LEAVES; 
-	protected Block logBlock = PrimitiModBlocks.blockOakLog; 
+	protected Block logBlock = PrimitiModBlocks.OakTree.log; 
 	protected int   growthRate = 20;
 	protected int[] trunkSectionMaxLength = new int[] { 2, 3, 4 };
 	protected int 	leavesMinHeight = 3;

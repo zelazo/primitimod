@@ -1,0 +1,24 @@
+{
+  "forge_marker": 1,
+
+  "variants": {
+  	"type" : {
+	    "large" : { "model": "primitimod:logs/oak/oak_log_big" },
+	    "medium" : { 
+	    	"model": "primitimod:logs/oak/oak_log_thin", 
+	    	"transform": {
+		      "gui": { "rotation" : [ { "x" : 25 }, { "y" : 45 }, { "z" : 0 } ], "scale" : 0.5 },
+		      "ground": { "scale" : 0.5 }
+		    }
+		},
+	    "small" : { 
+	    	"model": "primitimod:logs/oak/oak_log_thinner", 
+	    	"transform": {
+		      "gui": { "rotation" : [ { "x" : 25 }, { "y" : 45 }, { "z" : 0 } ], "scale" : 0.5 },
+		      "ground": { "scale" : 0.5 }
+		    }
+	    },
+	    "damaged" : { "model": "primitimod:logs/oak/oak_log_thinner" }
+  	}
+  }
+}

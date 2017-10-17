@@ -1,4 +1,4 @@
-package primitimod.blocks;
+package primitimod.trees.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
@@ -24,6 +24,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
+import primitimod.core.PrimitiModBlocks;
 import primitimod.core.PrimitiModItems;
 
 public class BlockLumberPile extends Block {
@@ -38,13 +39,13 @@ public class BlockLumberPile extends Block {
 		new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.500D, 1.0D)
     };
 	
-    public BlockLumberPile() {
+    public BlockLumberPile(String registryName) {
         super(Material.WOOD);
         setCreativeTab(PrimitiMod.tab);
-        setRegistryName("lumberpile");
+        setRegistryName(registryName);
         setHardness(1f);
         setHarvestLevel("axe", 0);
-        setUnlocalizedName(getRegistryName().toString());
+        setUnlocalizedName(registryName);
         
         setDefaultState(blockState.getBaseState().withProperty(PILESIZE, 0));
     }
@@ -77,7 +78,7 @@ public class BlockLumberPile extends Block {
 
 	    	ItemStack playerItemStack = player.getHeldItemMainhand();
 	    	Item playerItem = playerItemStack.getItem();
-	    	Item pileItem = PrimitiModItems.itemLumber;
+	    	Item pileItem = PrimitiModBlocks.OakTree.lumber;
 
 	    	if(playerItem == pileItem) {
 	    		

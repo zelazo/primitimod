@@ -12,6 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import primitimod.PrimitiMod;
 import primitimod.core.CommonProxy;
 import primitimod.core.PrimitiModBlocks;
+import primitimod.core.PrimitiModBlocks.OakTree;
 import primitimod.core.PrimitiModItems;
 import primitimod.entity.EntityRock;
 import primitimod.entity.RenderFactory;
@@ -31,12 +32,13 @@ public class ClientProxy extends CommonProxy {
     public void init(FMLInitializationEvent e) {
         super.init(e);
         
-        ColorManager.registerColourHandlers();
-        
+        OakTree.registerColourHandlers(OakTree.leaves);
     }
 	
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
+    	OakTree.initItemModels(OakTree.log, OakTree.leaves, OakTree.root, OakTree.lumberPile, OakTree.lumber);
+    	
         PrimitiModBlocks.initModels();
         PrimitiModItems.initModels();
         

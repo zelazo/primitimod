@@ -194,8 +194,9 @@ public class BlockComplexLog extends BlockLog {
     public void initModel() {
     	
     	for(EnumLogType type : EnumSet.of(EnumLogType.LARGE, EnumLogType.MEDIUM, EnumLogType.SMALL)) {
-    		System.out.println("registering BlockComplexLog("+getRegistryName()+") model variant: size=: "+type.getIndex());
-    		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.getIndex(), new ModelResourceLocation(getRegistryName()+"_item", "size="+type.getIndex()));    	
+    		System.out.println("registering BlockComplexLog("+getRegistryName()+") model variant: type=: "+type.getName());
+    		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.getIndex(), new ModelResourceLocation(getRegistryName()+"_item", "type="+type.getName()));
+//    		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), type.getIndex(), new ModelResourceLocation(getRegistryName()+"_item", "size="+type.getIndex()));
     	}
     }
     

@@ -1,4 +1,4 @@
-package primitimod.items;
+package primitimod.trees.item;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -13,18 +13,21 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
-import primitimod.blocks.BlockLumberPile;
 import primitimod.core.PrimitiModBlocks;
+import primitimod.trees.block.BlockLumberPile;
 
 public class ItemLumber extends Item {
 
 	private BlockLumberPile lumberPile;
 	
-	public ItemLumber() {//(String registryName, BlockLumberPile lumberPile) {
+	public ItemLumber(String registryName, BlockLumberPile lumberPile) {
 		setCreativeTab(PrimitiMod.tab);
-        setRegistryName("lumber");
+        setRegistryName(registryName);
         setMaxStackSize(16);
-        setUnlocalizedName(getRegistryName().toString());
+        setUnlocalizedName(registryName);
+        
+        this.lumberPile = lumberPile;
+        
     }
 
     @SideOnly(Side.CLIENT)
@@ -37,7 +40,7 @@ public class ItemLumber extends Item {
     		EnumFacing facing, float hitX, float hitY, float hitZ) {
     	
     	if(!world.isRemote) {
-
+    		System.out.println("javajvajvaj: "+PrimitiModBlocks.OakTree.root);
     		EnumActionResult result = EnumActionResult.FAIL;
     		
 	    	BlockPos newPos = pos.offset(facing);
@@ -52,15 +55,14 @@ public class ItemLumber extends Item {
 	    			if(player.isSneaking()) {
 	    				itemAmount = player.getHeldItemMainhand().getCount();
 	    			}
-	    			world.setBlockState(newPos, PrimitiModBlocks.blockLumberPile.getDefaultState()
+	    			world.setBlockState(newPos, lumberPile.getDefaultState()
 	    					.withProperty(BlockLumberPile.PILESIZE, itemAmount - 1));
 	    			
 	    			player.getHeldItemMainhand().shrink(itemAmount);
 	    			
 	    			result = EnumActionResult.SUCCESS;
 	    		}
-	    		else if(target.getBlock().equals(PrimitiModBlocks.blockLumberPile)) {
-	    			System.out.println("lumberpile!");
+	    		else if(target.getBlock().equals(lumberPile)) {
 	    			target.getBlock().onBlockActivated(world, newPos, target, player, hand, facing, hitX, hitY, hitZ);
 	    			result = EnumActionResult.SUCCESS;
 	    		}

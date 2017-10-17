@@ -1,5 +1,6 @@
 package primitimod.core.client;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.BlockColors;
@@ -10,19 +11,18 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.biome.BiomeColorHelper;
 import primitimod.core.PrimitiModBlocks;
+import primitimod.core.PrimitiModBlocks.OakTree;
 
 public class ColorManager {
 
-	public static void registerColourHandlers() {
-		final BlockColors blockColors = Minecraft.getMinecraft().getBlockColors();
-		final ItemColors itemColors = Minecraft.getMinecraft().getItemColors();
-
-		registerBlockColourHandlers(blockColors);
-		registerItemColourHandlers(blockColors, itemColors);
+	public static void registerColourHandlers(Block... blocks) {
+		registerBlockColourHandlers(blocks);
+		registerItemColourHandlers(blocks);
 	}
 
-	private static void registerBlockColourHandlers(final BlockColors blockColors) {
-
+	private static void registerBlockColourHandlers(Block... blocks) {
+		final BlockColors blockColors = Minecraft.getMinecraft().getBlockColors();
+		
 		final IBlockColor grassColourHandler = (state, blockAccess, pos, tintIndex) -> {
 			if (blockAccess != null && pos != null) {
 				return BiomeColorHelper.getGrassColorAtPos(blockAccess, pos);
@@ -31,19 +31,23 @@ public class ColorManager {
 			return ColorizerGrass.getGrassColor(0.5D, 1.0D);
 		};
 
-		blockColors.registerBlockColorHandler(grassColourHandler, PrimitiModBlocks.blockOakLeaves);
-		blockColors.registerBlockColorHandler(grassColourHandler, PrimitiModBlocks.blockPalmLeaves);
+		for(Block block : blocks) {
+			blockColors.registerBlockColorHandler(grassColourHandler, block);
+		}
 	}
 
-	private static void registerItemColourHandlers(final BlockColors blockColors, final ItemColors itemColors) {
-
+	private static void registerItemColourHandlers(Block... blocks) {
+		final BlockColors blockColors = Minecraft.getMinecraft().getBlockColors();
+		final ItemColors itemColors = Minecraft.getMinecraft().getItemColors();
+		
 		final IItemColor itemBlockColourHandler = (stack, tintIndex) -> {
 			@SuppressWarnings("deprecation")
 			final IBlockState state = ((ItemBlock) stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
 			return blockColors.colorMultiplier(state, null, null, tintIndex);
 		};
 
-		itemColors.registerItemColorHandler(itemBlockColourHandler, PrimitiModBlocks.blockOakLeaves);
-		itemColors.registerItemColorHandler(itemBlockColourHandler, PrimitiModBlocks.blockPalmLeaves);
+		for(Block block : blocks) {
+			itemColors.registerItemColorHandler(itemBlockColourHandler, block);
+		}
 	}
 }

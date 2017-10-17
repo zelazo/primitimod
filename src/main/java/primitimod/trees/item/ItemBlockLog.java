@@ -1,4 +1,4 @@
-package primitimod.core.registry;
+package primitimod.trees.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
@@ -6,11 +6,11 @@ import net.minecraft.item.ItemStack;
 import primitimod.PrimitiMod;
 import primitimod.trees.block.BlockComplexLog;
 
-public class LogItemBlock extends ItemBlock {
+public class ItemBlockLog extends ItemBlock {
 
-	public LogItemBlock(Block block) {
+	public ItemBlockLog(Block block) {
 		super(block);
-		this.setRegistryName(block.getRegistryName()+"_item");
+		this.setRegistryName(block.getRegistryName());//+"_item");
 		this.setHasSubtypes(true);
 		this.setCreativeTab(PrimitiMod.tab);
 	}
