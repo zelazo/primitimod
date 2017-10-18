@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

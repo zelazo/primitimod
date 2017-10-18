@@ -2,7 +2,6 @@ package primitimod.trees.tileentity;
 
 import java.util.stream.IntStream;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import primitimod.core.PrimitiModBlocks;
 

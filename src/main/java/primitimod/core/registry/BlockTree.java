@@ -1,7 +1,5 @@
 package primitimod.core.registry;
 
-import java.lang.reflect.Field;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -11,7 +9,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
-import primitimod.core.PrimitiModBlocks.OakTree;
 import primitimod.core.client.ColorManager;
 import primitimod.trees.block.BlockComplexLog;
 import primitimod.trees.block.BlockFallingLeaves;

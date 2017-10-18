@@ -1,6 +1,5 @@
 package primitimod.core.client;
 
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;

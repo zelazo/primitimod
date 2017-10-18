@@ -6,7 +6,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
 import primitimod.items.ItemHeavyAxe;
 import primitimod.items.ItemStoneRock;
-import primitimod.trees.item.ItemLumber;
 
 public class PrimitiModItems {
 

@@ -10,8 +10,6 @@ import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.biome.BiomeColorHelper;
-import primitimod.core.PrimitiModBlocks;
-import primitimod.core.PrimitiModBlocks.OakTree;
 
 public class ColorManager {
 
