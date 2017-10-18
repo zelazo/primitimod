@@ -1,6 +1,6 @@
 {
     "forge_marker": 1,
-    "parent": "primitimod:block/lumber",
+    "parent": "primitimod:block/trees/_abstract/lumber",
     "textures": {
         "side": "primitimod:blocks/log_oak_hit"
     }

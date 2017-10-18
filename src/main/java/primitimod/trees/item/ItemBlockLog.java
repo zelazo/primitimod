@@ -10,7 +10,7 @@ public class ItemBlockLog extends ItemBlock {
 
 	public ItemBlockLog(Block block) {
 		super(block);
-		this.setRegistryName(block.getRegistryName());//+"_item");
+		this.setRegistryName(block.getRegistryName());
 		this.setHasSubtypes(true);
 		this.setCreativeTab(PrimitiMod.tab);
 	}

@@ -21,10 +21,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
-import primitimod.core.PrimitiModBlocks;
+import primitimod.trees.item.ItemLumber;
 
 public class BlockLumberPile extends Block {
 		
+	private ItemLumber itemLumber;
+	
 	public static final int MAX_PILESIZE = 16;
 	public static final PropertyInteger PILESIZE = PropertyInteger.create("pilesize", 0, MAX_PILESIZE-1);
 
@@ -46,7 +48,15 @@ public class BlockLumberPile extends Block {
         setDefaultState(blockState.getBaseState().withProperty(PILESIZE, 0));
     }
     
-    @Override
+    public ItemLumber getItemLumber() {
+		return itemLumber;
+	}
+
+	public void setItemLumber(ItemLumber itemLumber) {
+		this.itemLumber = itemLumber;
+	}
+
+	@Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         int i = state.getValue(PILESIZE) / 4;
@@ -74,9 +84,9 @@ public class BlockLumberPile extends Block {
 
 	    	ItemStack playerItemStack = player.getHeldItemMainhand();
 	    	Item playerItem = playerItemStack.getItem();
-	    	Item pileItem = PrimitiModBlocks.OakTree.lumber;
+//	    	Item pileItem = PrimitiModBlocks.OakTree.lumber;
 
-	    	if(playerItem == pileItem) {
+	    	if(playerItem == itemLumber) {
 	    		
 		    	int itemAmount = 1;
 				if(player.isSneaking()) {
@@ -104,7 +114,7 @@ public class BlockLumberPile extends Block {
     			
         		BlockPos entityPos = pos;//.add(0.5d, 0.0d, 0.5d);//.up();
         		EntityItem spawnEntityItem = new EntityItem(world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), 
-        				new ItemStack(pileItem, itemAmount));
+        				new ItemStack(itemLumber, itemAmount));
         		
         		world.spawnEntity(spawnEntityItem);
 	        	

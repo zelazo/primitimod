@@ -12,6 +12,7 @@ import primitimod.PrimitiMod;
 import primitimod.core.CommonProxy;
 import primitimod.core.PrimitiModBlocks;
 import primitimod.core.PrimitiModBlocks.OakTree;
+import primitimod.core.PrimitiModBlocks.PalmTree;
 import primitimod.core.PrimitiModItems;
 import primitimod.entity.EntityRock;
 import primitimod.entity.RenderFactory;
@@ -32,11 +33,13 @@ public class ClientProxy extends CommonProxy {
         super.init(e);
         
         OakTree.registerColourHandlers(OakTree.leaves);
+        PalmTree.registerColourHandlers(PalmTree.leaves);
     }
 	
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
     	OakTree.initItemModels(OakTree.log, OakTree.leaves, OakTree.root, OakTree.lumberPile, OakTree.lumber);
+    	PalmTree.initItemModels(PalmTree.log, PalmTree.leaves, PalmTree.root, PalmTree.lumberPile, PalmTree.lumber);
     	
         PrimitiModBlocks.initModels();
         PrimitiModItems.initModels();

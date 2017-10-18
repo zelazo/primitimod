@@ -3,13 +3,14 @@ package primitimod;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import primitimod.core.CommonProxy;
-import primitimod.core.PrimitiModTab;
 
 @Mod(modid = PrimitiMod.MODID, version = PrimitiMod.MODVERSION)
 public class PrimitiMod
@@ -24,7 +25,12 @@ public class PrimitiMod
     @Mod.Instance
     public static PrimitiMod instance;
     
-    public static CreativeTabs tab = new PrimitiModTab();
+    public static CreativeTabs tab = new CreativeTabs(MODID) {
+    	@Override
+    	public ItemStack getTabIconItem() {
+    		return new ItemStack(Items.BONE);
+    	}
+    };
     
     public static Logger LOGGER;
     

@@ -40,7 +40,6 @@ public class ItemLumber extends Item {
     		EnumFacing facing, float hitX, float hitY, float hitZ) {
     	
     	if(!world.isRemote) {
-    		System.out.println("javajvajvaj: "+PrimitiModBlocks.OakTree.root);
     		EnumActionResult result = EnumActionResult.FAIL;
     		
 	    	BlockPos newPos = pos.offset(facing);

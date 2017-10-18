@@ -1,5 +1,5 @@
 {
-    "parent": "primitimod:block/logs/log_thin_connect",
+    "parent": "primitimod:block/trees/_abstract/log_thinner_connect",
     "textures": {
         "end": "blocks/log_oak",
         "side": "blocks/log_oak"

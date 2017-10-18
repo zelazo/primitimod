@@ -18,7 +18,7 @@ import primitimod.trees.item.ItemBlockLog;
 import primitimod.trees.item.ItemLumber;
 import primitimod.trees.tileentity.TreeRootTE;
 
-public class BlockTree {
+public class TreeRegistrar {
 
 	protected static final String treesDir = "trees/";
 	protected static final String rootName = "root";
@@ -48,7 +48,9 @@ public class BlockTree {
 	public static void registerItems(String treeName, IForgeRegistry<Item> registry, BlockLumberPile lumberPile) {
 		String prefix = treesDir+treeName+"/";
 		
-		registry.register(new ItemLumber(prefix+lumberName, lumberPile));
+		lumberPile.setItemLumber(new ItemLumber(prefix+lumberName, lumberPile));
+		registry.register(lumberPile.getItemLumber());
+		
 	}
 	
 	public static void registerItemBlocks(IForgeRegistry<Item> registry, BlockComplexLog logBlock, BlockFallingLeaves leavesBlock, Block rootBlock) {

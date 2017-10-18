@@ -3,135 +3,135 @@
     "multipart": [
 		{  
         	"when" : { "type" : "large", "axis" : "y" }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_big" }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_big" }
         },
         {  
         	"when" : { "type" : "large", "axis" : "x" }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_big", "x": 90, "y": 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_big", "x": 90, "y": 90 }
         },
         {  
         	"when" : { "type" : "large", "axis" : "z" }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_big", "x": 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_big", "x": 90 }
         }
 		
 		,
 	
         {  
         	"when" : { "type" : "medium", "axis" : "y" }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thin" }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thin" }
         },
         {  
         	"when" : { "type" : "medium", "axis" : "x" }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thin", "x": 90, "y": 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thin", "x": 90, "y": 90 }
         },
         {  
         	"when" : { "type" : "medium", "axis" : "z" }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thin", "x": 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thin", "x": 90 }
         },
         
         {  
         	"when" : { "OR" : [ { "type" : "medium", "axis" : "x", "down" : "true" }, { "type" : "medium", "axis" : "z", "down" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thin_connect" }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thin_connect" }
         },
         {  
         	"when" : { "OR" : [ { "type" : "medium", "axis" : "x", "up" : "true" }, { "type" : "medium", "axis" : "z", "up" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thin_connect", "x" : 180 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thin_connect", "x" : 180 }
         },
         {  
         	"when" : { "OR" : [ { "type" : "medium", "axis" : "x", "north" : "true" }, { "type" : "medium", "axis" : "y", "north" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thin_connect", "x" : 270 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thin_connect", "x" : 270 }
         },
         {  
         	"when" : { "OR" : [ { "type" : "medium", "axis" : "x", "south" : "true" }, { "type" : "medium", "axis" : "y", "south" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thin_connect", "x" : 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thin_connect", "x" : 90 }
         },
         {  
         	"when" : { "OR" : [ { "type" : "medium", "axis" : "z", "east" : "true" }, { "type" : "medium", "axis" : "y", "east" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thin_connect", "x" : 270, "y" : 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thin_connect", "x" : 270, "y" : 90 }
         },
         {  
         	"when" : { "OR" : [ { "type" : "medium", "axis" : "z", "west" : "true" }, { "type" : "medium", "axis" : "y", "west" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thin_connect", "x" : 90, "y" : 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thin_connect", "x" : 90, "y" : 90 }
         }
         
     ,
         
         {  
         	"when" : { "type" : "small", "axis" : "y" }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thinner" }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thinner" }
         },
         {  
         	"when" : { "type" : "small", "axis" : "x" }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thinner", "x": 90, "y": 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thinner", "x": 90, "y": 90 }
         },
         {  
         	"when" : { "type" : "small", "axis" : "z" }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thinner", "x": 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thinner", "x": 90 }
         },
         
         {  
         	"when" : { "OR" : [ { "type" : "small", "axis" : "x", "down" : "true" }, { "type" : "small", "axis" : "z", "down" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thinner_connect" }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thinner_connect" }
         },
         {  
         	"when" : { "OR" : [ { "type" : "small", "axis" : "x", "up" : "true" }, { "type" : "small", "axis" : "z", "up" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thinner_connect", "x" : 180 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thinner_connect", "x" : 180 }
         },
         {  
         	"when" : { "OR" : [ { "type" : "small", "axis" : "x", "north" : "true" }, { "type" : "small", "axis" : "y", "north" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thinner_connect", "x" : 270 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thinner_connect", "x" : 270 }
         },
         {  
         	"when" : { "OR" : [ { "type" : "small", "axis" : "x", "south" : "true" }, { "type" : "small", "axis" : "y", "south" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thinner_connect", "x" : 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thinner_connect", "x" : 90 }
         },
         {  
         	"when" : { "OR" : [ { "type" : "small", "axis" : "z", "east" : "true" }, { "type" : "small", "axis" : "y", "east" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thinner_connect", "x" : 270, "y" : 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thinner_connect", "x" : 270, "y" : 90 }
         },
         {  
         	"when" : { "OR" : [ { "type" : "small", "axis" : "z", "west" : "true" }, { "type" : "small", "axis" : "y", "west" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_thinner_connect", "x" : 90, "y" : 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_thinner_connect", "x" : 90, "y" : 90 }
         }
 		
     ,
         
         {  
         	"when" : { "type" : "damaged", "axis" : "y" }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_damaged" }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_damaged" }
         },
         {  
         	"when" : { "type" : "damaged", "axis" : "x" }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_damaged", "x": 90, "y": 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_damaged", "x": 90, "y": 90 }
         },
         {  
         	"when" : { "type" : "damaged", "axis" : "z" }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_damaged", "x": 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_damaged", "x": 90 }
         },
         
         {  
         	"when" : { "OR" : [ { "type" : "damaged", "axis" : "x", "down" : "true" }, { "type" : "damaged", "axis" : "z", "down" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_damaged_connect" }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_damaged_connect" }
         },
         {  
         	"when" : { "OR" : [ { "type" : "damaged", "axis" : "x", "up" : "true" }, { "type" : "damaged", "axis" : "z", "up" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_damaged_connect", "x" : 180 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_damaged_connect", "x" : 180 }
         },
         {  
         	"when" : { "OR" : [ { "type" : "damaged", "axis" : "x", "north" : "true" }, { "type" : "damaged", "axis" : "y", "north" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_damaged_connect", "x" : 270 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_damaged_connect", "x" : 270 }
         },
         {  
         	"when" : { "OR" : [ { "type" : "damaged", "axis" : "x", "south" : "true" }, { "type" : "damaged", "axis" : "y", "south" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_damaged_connect", "x" : 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_damaged_connect", "x" : 90 }
         },
         {  
         	"when" : { "OR" : [ { "type" : "damaged", "axis" : "z", "east" : "true" }, { "type" : "damaged", "axis" : "y", "east" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_damaged_connect", "x" : 270, "y" : 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_damaged_connect", "x" : 270, "y" : 90 }
         },
         {  
         	"when" : { "OR" : [ { "type" : "damaged", "axis" : "z", "west" : "true" }, { "type" : "damaged", "axis" : "y", "west" : "true" } ] }, 
-        	"apply": { "model": "primitimod:trees/oak/oak_log_damaged_connect", "x" : 90, "y" : 90 }
+        	"apply": { "model": "primitimod:trees/palm/palm_log_damaged_connect", "x" : 90, "y" : 90 }
         }
     ]
 }

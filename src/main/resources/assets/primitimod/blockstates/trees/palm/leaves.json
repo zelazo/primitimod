@@ -1,9 +1,10 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "primitimod:trees/oak/oak_lumber"
+    "model": "primitimod:trees/palm/palm_leaves"
   },
   "variants": {
+    "normal": [{}],
     "inventory": [{}]
   }
 }
