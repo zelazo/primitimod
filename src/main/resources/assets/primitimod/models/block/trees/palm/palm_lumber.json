@@ -2,6 +2,6 @@
     "forge_marker": 1,
     "parent": "primitimod:block/trees/_abstract/lumber",
     "textures": {
-        "side": "primitimod:blocks/log_palm_hit"
+        "side": "primitimod:blocks/trees/palm/palm_log_damaged"
     }
 }

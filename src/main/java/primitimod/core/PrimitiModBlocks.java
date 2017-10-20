@@ -32,7 +32,7 @@ public class PrimitiModBlocks {
 	    @GameRegistry.ObjectHolder(prefix+lumberName)
 	    public static ItemLumber lumber;
 	};
-
+	
 	@GameRegistry.ObjectHolder(PrimitiMod.MODID)
 	public static class PalmTree extends TreeRegistrar {
 		protected static final String treeName = "palm";
@@ -48,6 +48,35 @@ public class PrimitiModBlocks {
 	    @GameRegistry.ObjectHolder(prefix+lumberName)
 	    public static ItemLumber lumber;
 	};
+	
+	@GameRegistry.ObjectHolder(PrimitiMod.MODID)
+	public static class BirchTree extends TreeRegistrar {
+		protected static final String treeName = "birch";
+		protected static final String prefix = treesDir+treeName+"/";
+	    @GameRegistry.ObjectHolder(prefix+rootName)
+	    public static BlockTreeRoot root;
+	    @GameRegistry.ObjectHolder(prefix+logName)
+	    public static BlockComplexLog log;
+	    @GameRegistry.ObjectHolder(prefix+leavesName)
+	    public static BlockFallingLeaves leaves;
+	    @GameRegistry.ObjectHolder(prefix+lumberPileName)
+	    public static BlockLumberPile lumberPile;
+	    @GameRegistry.ObjectHolder(prefix+lumberName)
+	    public static ItemLumber lumber;
+	};
+	/*#TreeGenerator_registrar*/
+
+
+
+
+
+
+
+
+
+
+	
+	
 
     @GameRegistry.ObjectHolder("rockpile")
     public static BlockRockPile blockRockPile;
@@ -59,8 +88,9 @@ public class PrimitiModBlocks {
     }
     
     public static boolean isLog(Block block) {
-    	return block == OakTree.log ||
-    		   block == PalmTree.log
-    		   ;
+    	return false;
+//    	return block == OakTree.log ||
+//    		   false//block == PalmTree.log
+//    		   ;
     }
 }

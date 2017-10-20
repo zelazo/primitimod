@@ -2,7 +2,6 @@ package primitimod.trees.tileentity;
 
 import java.util.stream.IntStream;
 
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import primitimod.core.PrimitiModBlocks;
 
@@ -12,24 +11,35 @@ public final class OakTreeRootTE extends TreeRootTE {
 		this.leavesBlock = PrimitiModBlocks.OakTree.leaves; 
 		this.logBlock = PrimitiModBlocks.OakTree.log; 
 		this.growthRate = 20;
-		this.trunkSectionMaxLength = new int[] { 3, 4, 5 };
+		this.trunkSectionMaxLength = new int[] { 8, 2, 2 };
 		this.trunkMaxHeight = IntStream.of(trunkSectionMaxLength).sum();
 		this.leavesMinHeight = 4;
-		this.branchMinHeight = 4;
+		this.branchMinHeight = 3;
 		this.branchHeightSpread = 2;
-		this.branchGrowthSpeed = 40;
-		this.canGrowMultiBranch = false;
+		this.branchGrowthSpeed = 60;
+		this.canGrowMultiBranch = true;
 	}
 	
 	public BlockPos getNextTrunkPos(BlockPos target) {
-		return target.offset(EnumFacing.UP).offset(EnumFacing.HORIZONTALS[getHeight(target)%4]);
+		return target.up();
 	}
 	
 	public BlockPos getPrevTrunkPos(BlockPos target) {
-		return target.offset(EnumFacing.DOWN).offset( EnumFacing.HORIZONTALS[(getHeight(target.down()))%4].getOpposite() );
+		return target.down();
 	}
 
 	public int getBranchMaxLength(BlockPos target) {
-		return (trunkMaxHeight - getHeight(target)) / 2;
+		int x = 0;
+		
+		if(getHeight(target) < leavesMinHeight + (trunkMaxHeight-leavesMinHeight) / 2 ) {
+			x = getHeight(target) - leavesMinHeight + 1;
+		}
+		else {
+			x = trunkMaxHeight - getHeight(target) + 1;
+		}
+		
+		
+		return x;
 	}
 }
+

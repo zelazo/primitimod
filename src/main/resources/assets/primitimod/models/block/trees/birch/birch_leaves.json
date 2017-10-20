@@ -1,0 +1,6 @@
+{
+    "parent": "block/leaves",
+    "textures": {
+        "all": "primitimod:blocks/trees/birch/birch_leaves"
+    }
+}

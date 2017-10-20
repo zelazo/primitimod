@@ -11,12 +11,12 @@ public final class PalmTreeRootTE extends TreeRootTE {
 		this.leavesBlock = PrimitiModBlocks.PalmTree.leaves; 
 		this.logBlock = PrimitiModBlocks.PalmTree.log; 
 		this.growthRate = 20;
-		this.trunkSectionMaxLength = new int[] { 4, 3, 2 };
+		this.trunkSectionMaxLength = new int[] { 3, 5, 4 };
 		this.trunkMaxHeight = IntStream.of(trunkSectionMaxLength).sum();
-		this.leavesMinHeight = 5;
-		this.branchMinHeight = trunkMaxHeight - 4;
+		this.leavesMinHeight = trunkMaxHeight - 1;
+		this.branchMinHeight = trunkMaxHeight - 1;
 		this.branchHeightSpread = 2;
-		this.branchGrowthSpeed = 40;
+		this.branchGrowthSpeed = 80;
 		this.canGrowMultiBranch = true;
 	}
 	
@@ -29,6 +29,7 @@ public final class PalmTreeRootTE extends TreeRootTE {
 	}
 
 	public int getBranchMaxLength(BlockPos target) {
-		return getHeight(target) / 2;
+		return 4;
 	}
 }
+

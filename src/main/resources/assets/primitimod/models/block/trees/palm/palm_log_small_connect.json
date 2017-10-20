@@ -1,0 +1,7 @@
+{
+    "parent": "primitimod:block/trees/_abstract/log_small_connect",
+    "textures": {
+        "end": "primitimod:blocks/trees/palm/palm_log_side",
+        "side": "primitimod:blocks/trees/palm/palm_log_side"
+    }
+}

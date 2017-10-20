@@ -2,7 +2,6 @@ package primitimod.core;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -14,16 +13,18 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import primitimod.PrimitiMod;
 import primitimod.blocks.BlockRockPile;
-import primitimod.blocks.BlockSimple;
-import primitimod.core.PrimitiModBlocks.OakTree;
-import primitimod.core.PrimitiModBlocks.PalmTree;
 import primitimod.entity.EntityRock;
 import primitimod.items.ItemHeavyAxe;
 import primitimod.items.ItemStoneRock;
-import primitimod.trees.block.BlockComplexLog;
-import primitimod.trees.item.ItemBlockLog;
 import primitimod.trees.tileentity.OakTreeRootTE;
 import primitimod.trees.tileentity.PalmTreeRootTE;
+import primitimod.trees.tileentity.BirchTreeRootTE;
+/*#TreeGenerator_importTE*/
+
+
+
+
+
 
 @Mod.EventBusSubscriber
 public class CommonProxy {
@@ -42,26 +43,55 @@ public class CommonProxy {
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
-    	OakTree.registerBlocks(OakTree.treeName, OakTreeRootTE.class, event.getRegistry());
-    	PalmTree.registerBlocks(PalmTree.treeName, PalmTreeRootTE.class, event.getRegistry());
-    	
+    	PrimitiModBlocks.OakTree.registerBlocks(PrimitiModBlocks.OakTree.treeName, OakTreeRootTE.class, event.getRegistry());
+    	PrimitiModBlocks.PalmTree.registerBlocks(PrimitiModBlocks.PalmTree.treeName, PalmTreeRootTE.class, event.getRegistry());
+    	PrimitiModBlocks.BirchTree.registerBlocks(PrimitiModBlocks.BirchTree.treeName, BirchTreeRootTE.class, event.getRegistry());
+    	/*#TreeGenerator_registerBlocks*/
+
+
+
+
+
+
+
+
+
         event.getRegistry().register(new BlockRockPile());
     }
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-    	OakTree.registerItems(OakTree.treeName, event.getRegistry(), OakTree.lumberPile);
-    	PalmTree.registerItems(PalmTree.treeName, event.getRegistry(), PalmTree.lumberPile);
-    	
-    	
+    	PrimitiModBlocks.OakTree.registerItems(PrimitiModBlocks.OakTree.treeName, event.getRegistry(), PrimitiModBlocks.OakTree.lumberPile);
+    	PrimitiModBlocks.PalmTree.registerItems(PrimitiModBlocks.PalmTree.treeName, event.getRegistry(), PrimitiModBlocks.PalmTree.lumberPile);
+    	PrimitiModBlocks.BirchTree.registerItems(PrimitiModBlocks.BirchTree.treeName, event.getRegistry(), PrimitiModBlocks.BirchTree.lumberPile);
+    	/*#TreeGenerator_registerItems*/
+
+
+
+
+
+
+
+
+
     	event.getRegistry().register(new ItemStoneRock());
     	event.getRegistry().register(new ItemHeavyAxe());
     }
     
     @SubscribeEvent
     public static void registerItemBlocks(final RegistryEvent.Register<Item> event) {
-    	OakTree.registerItemBlocks(event.getRegistry(), OakTree.log, OakTree.leaves, OakTree.root);
-    	PalmTree.registerItemBlocks(event.getRegistry(), PalmTree.log, PalmTree.leaves, PalmTree.root);
+    	PrimitiModBlocks.OakTree.registerItemBlocks(event.getRegistry(), PrimitiModBlocks.OakTree.log, PrimitiModBlocks.OakTree.leaves, PrimitiModBlocks.OakTree.root);
+    	PrimitiModBlocks.PalmTree.registerItemBlocks(event.getRegistry(), PrimitiModBlocks.PalmTree.log, PrimitiModBlocks.PalmTree.leaves, PrimitiModBlocks.PalmTree.root);
+    	PrimitiModBlocks.BirchTree.registerItemBlocks(event.getRegistry(), PrimitiModBlocks.BirchTree.log, PrimitiModBlocks.BirchTree.leaves, PrimitiModBlocks.BirchTree.root);
+    	/*#TreeGenerator_registerItemBlocks*/
+
+
+
+
+
+
+
+
     }
     
     @SubscribeEvent

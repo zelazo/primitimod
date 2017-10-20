@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "primitimod:blocks/trees/oak/oak_log_top",
+        "side": "primitimod:blocks/trees/oak/oak_log_side"
+    }
+}

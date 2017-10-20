@@ -1,7 +1,0 @@
-{
-    "parent": "primitimod:block/logs/log_thinner",
-    "textures": {
-        "end": "blocks/log_jungle_top",
-        "side": "primitimod:blocks/log_oak_hit"
-    }
-}

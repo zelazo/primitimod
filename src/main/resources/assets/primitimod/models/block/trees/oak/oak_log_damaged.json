@@ -1,7 +1,7 @@
 {
-    "parent": "primitimod:block/trees/_abstract/log_thinner",
+    "parent": "primitimod:block/trees/_abstract/log_small",
     "textures": {
-        "end": "blocks/log_oak_top",
-        "side": "primitimod:blocks/log_oak_hit"
+        "end": "primitimod:blocks/trees/oak/oak_log_top",
+        "side": "primitimod:blocks/trees/oak/oak_log_damaged"
     }
 }

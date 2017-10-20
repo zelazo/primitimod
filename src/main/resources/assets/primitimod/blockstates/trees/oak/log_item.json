@@ -3,22 +3,22 @@
 
   "variants": {
   	"type" : {
-	    "large" : { "model": "primitimod:trees/oak/oak_log_big" },
+	    "large" : { "model": "primitimod:trees/oak/oak_log_large" },
 	    "medium" : { 
-	    	"model": "primitimod:trees/oak/oak_log_thin", 
+	    	"model": "primitimod:trees/oak/oak_log_medium", 
 	    	"transform": {
 		      "gui": { "rotation" : [ { "x" : 25 }, { "y" : 45 }, { "z" : 0 } ], "scale" : 0.5 },
 		      "ground": { "scale" : 0.5 }
 		    }
 		},
 	    "small" : { 
-	    	"model": "primitimod:trees/oak/oak_log_thinner", 
+	    	"model": "primitimod:trees/oak/oak_log_small", 
 	    	"transform": {
 		      "gui": { "rotation" : [ { "x" : 25 }, { "y" : 45 }, { "z" : 0 } ], "scale" : 0.5 },
 		      "ground": { "scale" : 0.5 }
 		    }
 	    },
-	    "damaged" : { "model": "primitimod:trees/oak/oak_log_thinner" }
+	    "damaged" : { "model": "primitimod:trees/oak/oak_log_small" }
   	}
   }
 }

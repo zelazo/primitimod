@@ -1,0 +1,7 @@
+{
+    "forge_marker": 1,
+    "parent": "primitimod:block/trees/_abstract/lumber",
+    "textures": {
+        "side": "primitimod:blocks/trees/birch/birch_log_damaged"
+    }
+}

@@ -1,0 +1,24 @@
+{
+  "forge_marker": 1,
+
+  "variants": {
+  	"type" : {
+	    "large" : { "model": "primitimod:trees/birch/birch_log_large" },
+	    "medium" : { 
+	    	"model": "primitimod:trees/birch/birch_log_medium", 
+	    	"transform": {
+		      "gui": { "rotation" : [ { "x" : 25 }, { "y" : 45 }, { "z" : 0 } ], "scale" : 0.5 },
+		      "ground": { "scale" : 0.5 }
+		    }
+		},
+	    "small" : { 
+	    	"model": "primitimod:trees/birch/birch_log_small", 
+	    	"transform": {
+		      "gui": { "rotation" : [ { "x" : 25 }, { "y" : 45 }, { "z" : 0 } ], "scale" : 0.5 },
+		      "ground": { "scale" : 0.5 }
+		    }
+	    },
+	    "damaged" : { "model": "primitimod:trees/birch/birch_log_small" }
+  	}
+  }
+}

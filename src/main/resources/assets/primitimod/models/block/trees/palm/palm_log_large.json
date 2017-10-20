@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "primitimod:blocks/trees/palm/palm_log_top",
+        "side": "primitimod:blocks/trees/palm/palm_log_side"
+    }
+}

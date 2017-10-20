@@ -17,13 +17,12 @@ import net.minecraft.util.math.BlockPos;
 import primitimod.core.PrimitiModBlocks;
 import primitimod.trees.block.BlockComplexLog;
 import primitimod.trees.block.BlockComplexLog.EnumLogType;
-import primitimod.trees.block.BlockFallingLeaves;
 import primitimod.utils.BlockPosUtils;
 
 public class TreeRootTE extends TileEntity implements ITickable {
 
 	protected Block leavesBlock = Blocks.LEAVES; 
-	protected Block logBlock = PrimitiModBlocks.OakTree.log; 
+	protected Block logBlock = Blocks.LOG; 
 	protected int   growthRate = 20;
 	protected int[] trunkSectionMaxLength = new int[] { 2, 3, 4 };
 	protected int 	leavesMinHeight = 3;

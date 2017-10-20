@@ -1,0 +1,7 @@
+{
+    "parent": "primitimod:block/trees/_abstract/log_medium_connect",
+    "textures": {
+        "end": "primitimod:blocks/trees/oak/oak_log_side",
+        "side": "primitimod:blocks/trees/oak/oak_log_side"
+    }
+}

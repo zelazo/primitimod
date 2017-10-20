@@ -11,8 +11,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import primitimod.PrimitiMod;
 import primitimod.core.CommonProxy;
 import primitimod.core.PrimitiModBlocks;
-import primitimod.core.PrimitiModBlocks.OakTree;
-import primitimod.core.PrimitiModBlocks.PalmTree;
 import primitimod.core.PrimitiModItems;
 import primitimod.entity.EntityRock;
 import primitimod.entity.RenderFactory;
@@ -32,14 +30,32 @@ public class ClientProxy extends CommonProxy {
     public void init(FMLInitializationEvent e) {
         super.init(e);
         
-        OakTree.registerColourHandlers(OakTree.leaves);
-        PalmTree.registerColourHandlers(PalmTree.leaves);
+    	PrimitiModBlocks.OakTree.registerColourHandlers(PrimitiModBlocks.OakTree.leaves);
+    	PrimitiModBlocks.PalmTree.registerColourHandlers(PrimitiModBlocks.PalmTree.leaves);
+    	PrimitiModBlocks.BirchTree.registerColourHandlers(PrimitiModBlocks.BirchTree.leaves);
+    	/*#TreeGenerator_registerColour*/
+
+
+
+
+
+
+
     }
 	
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
-    	OakTree.initItemModels(OakTree.log, OakTree.leaves, OakTree.root, OakTree.lumberPile, OakTree.lumber);
-    	PalmTree.initItemModels(PalmTree.log, PalmTree.leaves, PalmTree.root, PalmTree.lumberPile, PalmTree.lumber);
+    	PrimitiModBlocks.OakTree.initItemModels(PrimitiModBlocks.OakTree.log, PrimitiModBlocks.OakTree.leaves, PrimitiModBlocks.OakTree.root, PrimitiModBlocks.OakTree.lumberPile, PrimitiModBlocks.OakTree.lumber);
+    	PrimitiModBlocks.PalmTree.initItemModels(PrimitiModBlocks.PalmTree.log, PrimitiModBlocks.PalmTree.leaves, PrimitiModBlocks.PalmTree.root, PrimitiModBlocks.PalmTree.lumberPile, PrimitiModBlocks.PalmTree.lumber);
+    	PrimitiModBlocks.BirchTree.initItemModels(PrimitiModBlocks.BirchTree.log, PrimitiModBlocks.BirchTree.leaves, PrimitiModBlocks.BirchTree.root, PrimitiModBlocks.BirchTree.lumberPile, PrimitiModBlocks.BirchTree.lumber);
+    	/*#TreeGenerator_initItemModels*/
+
+
+
+
+
+
+
     	
         PrimitiModBlocks.initModels();
         PrimitiModItems.initModels();

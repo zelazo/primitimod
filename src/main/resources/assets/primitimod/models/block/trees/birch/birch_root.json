@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "primitimod:blocks/trees/birch/birch_log_side"
+    }
+}

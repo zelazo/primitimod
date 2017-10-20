@@ -54,8 +54,8 @@ public class BlockFallingLeaves extends BlockFalling {
         	boolean hasLogSupport = false;
         	
         	for(EnumFacing facing : EnumFacing.VALUES) {
-        		
-        		if(PrimitiModBlocks.isLog(worldIn.getBlockState(pos.offset(facing)).getBlock())) {
+
+        		if(worldIn.getBlockState(pos.offset(facing)).getBlock() instanceof BlockComplexLog) {
         			hasLogSupport = true;
         			break;
         		}
