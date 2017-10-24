@@ -1,0 +1,63 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	    "transform": {
+          "thirdperson_lefthand": {
+    		"rotation" : [ { "x" : 0 }, { "y" : 0 }, { "z" : 0 } ],
+            "translation" : [0.0, 0.5, -0.1],
+            "scale": 1.0
+          },
+          "thirdperson_righthand": {
+            "rotation" : [ { "x" : 0 }, { "y" : 90 }, { "z" : 0 } ],
+            "translation" : [0.0, 0.5, -0.1],
+            "scale": 1.0
+          },
+          "firstperson_righthand": {
+            "rotation" : [ { "x" : 0 }, { "y" : 0 }, { "z" : 0 } ],
+            "translation" : [0.0, 0.5, -0.1],
+            "scale": 1.0
+          },
+          "firstperson_lefthand": {
+            "rotation" : [ { "x" : 0 }, { "y" : 0 }, { "z" : 0 } ],
+            "translation" : [0.0, 0.5, -0.1],
+            "scale": 1.0
+          },
+          "gui": {
+            "rotation": [ { "x": 0 }, { "y": 0 }, { "z": 0 } ],
+            "translation": [ -0.2, 1.1, 0 ],
+            "scale": 3.0
+          },
+          "ground": {
+            "rotation": [ { "x": 0 }, { "y": 0 }, { "z": 0 } ],
+            "translation": [ 0, 0.3, 0 ],
+            "scale": 1.0
+          }
+        }
+  },
+  "variants": {
+  	"normal" : [{}],
+    "inventory": [
+      {
+      	"submodel": {
+	        "rock1": { 
+	        	"model": "primitimod:sharprock",
+	        	"textures": { "side": "blocks/stone" },
+	        	"transform" : {
+	    			"translation" : [0.14375, 0.7, 0.0875],
+	    			"scale" : 0.7
+	        	}
+	    	},
+	    	"lumber1": { 
+	        	"model": "primitimod:trees/oak/oak_lumber",
+	        	"transform" : {
+	    			"translation" : [0.30625, 0.13125, 0.30625],
+	    			"rotation" : [ { "x" : 90 }, { "y" : 0 }, { "z" : 0 } ],
+	    			"scale" : 0.7
+	        	}
+	    	}
+		}
+        
+      }
+    ]
+  }
+}

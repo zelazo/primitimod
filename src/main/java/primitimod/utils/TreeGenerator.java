@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import primitimod.PrimitiMod;
+import primitimod.core.PrimitiModBlocks;
 
 public class TreeGenerator {
 	
@@ -716,6 +717,8 @@ public class TreeGenerator {
 				"	    public static BlockComplexLog log;\n"+
 				"	    @GameRegistry.ObjectHolder(prefix+leavesName)\n"+
 				"	    public static BlockFallingLeaves leaves;\n"+
+				"	    @GameRegistry.ObjectHolder(prefix+saplingName)\n"+
+				"	    public static BlockTreeSapling sapling;\n"+
 				"	    @GameRegistry.ObjectHolder(prefix+lumberPileName)\n"+
 				"	    public static BlockLumberPile lumberPile;\n"+
 				"	    @GameRegistry.ObjectHolder(prefix+lumberName)\n"+
@@ -738,7 +741,7 @@ public class TreeGenerator {
 	
 	private static String getItemRegisterCode(String treeNameWPref) {
 		String code = 
-				"##uname##Tree.registerItems(##uname##Tree.treeName, event.getRegistry(), ##uname##Tree.lumberPile);\n"+
+				"##uname##Tree.registerItems(##uname##Tree.treeName, event.getRegistry(), ##uname##Tree.lumberPile, ##uname##Tree.log);\n"+
 				"    	"+registerItemTag+"\n";
 		
 		return code.replace("##uname##", treeNameWPref);
@@ -746,7 +749,7 @@ public class TreeGenerator {
 	
 	private static String getItemBlockRegisterCode(String treeNameWPref) {
 		String code = 
-				"##uname##Tree.registerItemBlocks(event.getRegistry(), ##uname##Tree.log, ##uname##Tree.leaves, ##uname##Tree.root);\n"+
+				"##uname##Tree.registerItemBlocks(event.getRegistry(), ##uname##Tree.log, ##uname##Tree.leaves, ##uname##Tree.root, ##uname##Tree.sapling);\n"+
 				"    	"+registerItemBlockTag+"\n";
 		
 		return code.replace("##uname##", treeNameWPref);
@@ -754,7 +757,7 @@ public class TreeGenerator {
 	
 	private static String getInitModelsCode(String treeNameWPref) {
 		String code = 
-				"##uname##Tree.initItemModels(##uname##Tree.log, ##uname##Tree.leaves, ##uname##Tree.root, ##uname##Tree.lumberPile, ##uname##Tree.lumber);\n"+
+				"##uname##Tree.initItemModels(##uname##Tree.log, ##uname##Tree.leaves, ##uname##Tree.root, ##uname##Tree.sapling, ##uname##Tree.lumberPile, ##uname##Tree.lumber);\n"+
 				"    	"+initModelsTag+"\n";
 		
 		return code.replace("##uname##", treeNameWPref);

@@ -13,12 +13,12 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import primitimod.PrimitiMod;
 import primitimod.blocks.BlockRockPile;
-import primitimod.entity.EntityRock;
+import primitimod.entity.EntityStoneRock;
 import primitimod.items.ItemHeavyAxe;
 import primitimod.items.ItemStoneRock;
+import primitimod.trees.tileentity.BirchTreeRootTE;
 import primitimod.trees.tileentity.OakTreeRootTE;
 import primitimod.trees.tileentity.PalmTreeRootTE;
-import primitimod.trees.tileentity.BirchTreeRootTE;
 /*#TreeGenerator_importTE*/
 
 
@@ -48,29 +48,15 @@ public class CommonProxy {
     	PrimitiModBlocks.BirchTree.registerBlocks(PrimitiModBlocks.BirchTree.treeName, BirchTreeRootTE.class, event.getRegistry());
     	/*#TreeGenerator_registerBlocks*/
 
-
-
-
-
-
-
-
-
         event.getRegistry().register(new BlockRockPile());
     }
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-    	PrimitiModBlocks.OakTree.registerItems(PrimitiModBlocks.OakTree.treeName, event.getRegistry(), PrimitiModBlocks.OakTree.lumberPile);
-    	PrimitiModBlocks.PalmTree.registerItems(PrimitiModBlocks.PalmTree.treeName, event.getRegistry(), PrimitiModBlocks.PalmTree.lumberPile);
-    	PrimitiModBlocks.BirchTree.registerItems(PrimitiModBlocks.BirchTree.treeName, event.getRegistry(), PrimitiModBlocks.BirchTree.lumberPile);
+    	PrimitiModBlocks.OakTree.registerItems(PrimitiModBlocks.OakTree.treeName, event.getRegistry(), PrimitiModBlocks.OakTree.lumberPile, PrimitiModBlocks.OakTree.log);
+    	PrimitiModBlocks.PalmTree.registerItems(PrimitiModBlocks.PalmTree.treeName, event.getRegistry(), PrimitiModBlocks.PalmTree.lumberPile, PrimitiModBlocks.PalmTree.log);
+    	PrimitiModBlocks.BirchTree.registerItems(PrimitiModBlocks.BirchTree.treeName, event.getRegistry(), PrimitiModBlocks.BirchTree.lumberPile, PrimitiModBlocks.BirchTree.log);
     	/*#TreeGenerator_registerItems*/
-
-
-
-
-
-
 
 
 
@@ -80,15 +66,10 @@ public class CommonProxy {
     
     @SubscribeEvent
     public static void registerItemBlocks(final RegistryEvent.Register<Item> event) {
-    	PrimitiModBlocks.OakTree.registerItemBlocks(event.getRegistry(), PrimitiModBlocks.OakTree.log, PrimitiModBlocks.OakTree.leaves, PrimitiModBlocks.OakTree.root);
-    	PrimitiModBlocks.PalmTree.registerItemBlocks(event.getRegistry(), PrimitiModBlocks.PalmTree.log, PrimitiModBlocks.PalmTree.leaves, PrimitiModBlocks.PalmTree.root);
-    	PrimitiModBlocks.BirchTree.registerItemBlocks(event.getRegistry(), PrimitiModBlocks.BirchTree.log, PrimitiModBlocks.BirchTree.leaves, PrimitiModBlocks.BirchTree.root);
+    	PrimitiModBlocks.OakTree.registerItemBlocks(event.getRegistry(), PrimitiModBlocks.OakTree.log, PrimitiModBlocks.OakTree.leaves, PrimitiModBlocks.OakTree.root, PrimitiModBlocks.OakTree.sapling);
+    	PrimitiModBlocks.PalmTree.registerItemBlocks(event.getRegistry(), PrimitiModBlocks.PalmTree.log, PrimitiModBlocks.PalmTree.leaves, PrimitiModBlocks.PalmTree.root, PrimitiModBlocks.PalmTree.sapling);
+    	PrimitiModBlocks.BirchTree.registerItemBlocks(event.getRegistry(), PrimitiModBlocks.BirchTree.log, PrimitiModBlocks.BirchTree.leaves, PrimitiModBlocks.BirchTree.root, PrimitiModBlocks.BirchTree.sapling);
     	/*#TreeGenerator_registerItemBlocks*/
-
-
-
-
-
 
 
 
@@ -98,13 +79,17 @@ public class CommonProxy {
     public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
 
     	String entityName = "entityrock";
-    	EntityEntry entityEntry = new EntityEntry(EntityRock.class, entityName);
-    	entityEntry.setRegistryName(new ResourceLocation(PrimitiMod.MODID,entityName));
+//    	EntityEntry entityEntry = new EntityEntry(EntityStoneRock.class, entityName);
+//    	entityEntry.setRegistryName(new ResourceLocation(PrimitiMod.MODID,entityName));
     	
-    	EntityRegistry.registerModEntity(
-			new ResourceLocation(PrimitiMod.MODID,entityName.toLowerCase()), 
-			EntityRock.class, entityName, 1, PrimitiMod.instance, 80, 20, true
-		);
+//    	EntityRegistry.registerModEntity(
+//			new ResourceLocation(PrimitiMod.MODID,entityName.toLowerCase()), 
+//			EntityStoneRock.class, entityName, 1, PrimitiMod.instance, 80, 20, true
+//		);
+    	
+    	
+    	EntityRegistry.registerModEntity(new ResourceLocation(PrimitiMod.MODID,entityName), EntityStoneRock.class, 
+    			entityName, 1, PrimitiMod.instance, 80, 20, true); 
 
     	
 //    	event.getRegistry().register(entityEntry.setRegistryName(PrimitiMod.MODID, "entityrock"));

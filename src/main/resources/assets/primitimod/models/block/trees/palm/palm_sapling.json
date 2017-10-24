@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross" : "primitimod:blocks/trees/palm/palm_sapling"
+    }
+}

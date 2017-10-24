@@ -5,32 +5,25 @@ import java.util.EnumSet;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
-import primitimod.core.PrimitiModBlocks;
 import primitimod.trees.block.BlockComplexLog;
 
-public class ItemHeavyAxe extends Item {
+public class ItemHeavyAxe extends SweepableItem {
 
 	public ItemHeavyAxe() {
 		setCreativeTab(PrimitiMod.tab);
@@ -55,8 +48,8 @@ public class ItemHeavyAxe extends Item {
         if (entityLiving instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer)entityLiving;
             
-            
 
+            
             int power = this.getMaxItemUseDuration(stack) - timeLeft;
             
             if(power > 25) {
@@ -65,20 +58,23 @@ public class ItemHeavyAxe extends Item {
 	                RayTraceResult ray = player.rayTrace(3.0d, 0.2f);
 	                BlockPos hitPos = ray.getBlockPos();
 	                IBlockState hitBlockState = world.getBlockState(hitPos);
-
-	                hitBlock(player, world, ray.getBlockPos());
-
+	                
+//	                if(ray.sideHit == EnumFacing.UP) {
+//	                	splitLog(player, world, ray.getBlockPos());
+//	                }
+//	                else {
+	                	hitTree(player, world, ray.getBlockPos());
+//	                }
+	                
 	                int damage = setToolDamage(world, player, hitBlockState, hitPos);
 	                
 	                if(damage > 0) {
 	                	world.playEvent(2001, hitPos, Block.getStateId(hitBlockState));
 	                }
 	                
-		            world.playSound((EntityPlayer)null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, player.getSoundCategory(), 1.0F, 1.0F);
 		            spawnSweepParticles(world, player);
-	                
-	                
 	        	}
+	        	KeyBinding.onTick(Minecraft.getMinecraft().gameSettings.keyBindAttack.getKeyCode());
             }
             else {
             	if (!world.isRemote) {
@@ -107,63 +103,52 @@ public class ItemHeavyAxe extends Item {
         return damage;
     }
     
-    public int getDamageFromHarvestLevel(float hardness) {
-    	int damage = 1;
+
+    public boolean splitLog(EntityPlayer player, World world, BlockPos pos, IBlockState state) {
     	
-		if(hardness > 50) {
-			damage = 0;
-		}
-		else if(hardness > 20) {
-			damage = 10;
-		}
-		else if(hardness > 4) {
-			damage = 5;
-		}
-		else if(hardness >= 2) {
-			damage = 3;
-		}
-		else if(hardness > 0) {
-			damage = 2;
-		}
-		else {
-			damage = 0; 
-		}
-		
-		return damage;
+    	int itemAmount = state.getValue(BlockComplexLog.TYPE).getLumberDropAmount();
+    	
+
+    	if(state.getBlock() instanceof BlockComplexLog) {
+    		BlockComplexLog log = (BlockComplexLog) state.getBlock();
+    		
+	    	BlockPos entityPos = pos;//.add(0.5d, 0.0d, 0.5d);//.up();
+			EntityItem spawnEntityItem = new EntityItem(world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), 
+					new ItemStack(log.getItemLumber(), itemAmount));
+			
+			world.spawnEntity(spawnEntityItem);
+    	
+    	}
+    	world.destroyBlock(pos, false);
+    	
+    	return false;
     }
     
-    public void spawnSweepParticles(World world, EntityPlayer player) {
-    	double d0 = (double)(-MathHelper.sin(player.rotationYaw * 0.017453292F));
-        double d1 = (double)MathHelper.cos(player.rotationYaw * 0.017453292F);
-        double d2 = (double)(-MathHelper.sin(player.rotationPitch * 0.017453292F));
-        
-        if (world instanceof WorldServer) {
-            ((WorldServer)world).spawnParticle(EnumParticleTypes.SWEEP_ATTACK, player.posX + d0, player.posY + (double)player.eyeHeight * 0.9D * (1.0D + d2), player.posZ + d1, 0, d0, 0.0D, d1, 0.0D);
-//            ((WorldServer)world).spawnParticle(EnumParticleTypes.SWEEP_ATTACK, player.posX + d0, player.posY + (double)player.eyeHeight * 0.9D + (double)player.eyeHeight * 0.9D * d2, player.posZ + d1, 0, d0, 0.0D, d1, 0.0D);
-        }
-        
-    }
-    
-    public boolean hitBlock(EntityPlayer player, World world, BlockPos pos) {
+    public boolean hitTree(EntityPlayer player, World world, BlockPos pos) {
     	if(!world.isRemote) {
 
 	    	IBlockState target = world.getBlockState(pos);
 	    	
-	    	if( PrimitiModBlocks.isLog(target.getBlock()) ) {
+	    	if( target.getBlock() instanceof BlockComplexLog ) {
 	    		
 	    		if(target.getValue(BlockComplexLog.TYPE) == BlockComplexLog.EnumLogType.DAMAGED) {
-		    		System.out.println("axe hit!");
 		    		BlockPos toCut = findBlockToCut(world, pos, target.getBlock());
-		    		
 		    		cutLog(world, toCut);
 		    		
 		    		return true;
 		    	}
 	    		else {
 	    		
-	    			world.setBlockState(pos, target
-						.withProperty(BlockComplexLog.TYPE, BlockComplexLog.EnumLogType.DAMAGED ) 
-					);
+	    			BlockPos toCut = findBlockToCut(world, pos, target.getBlock());
+		    		
+	    			if(toCut == pos) {
+	    				splitLog(player, world, pos, target);
+	    			}
+	    			else {
+		    			world.setBlockState(pos, target
+							.withProperty(BlockComplexLog.TYPE, BlockComplexLog.EnumLogType.DAMAGED ) 
+						);
+	    			}
 		    			
 	    			return true;
 		    	}
@@ -172,34 +157,6 @@ public class ItemHeavyAxe extends Item {
     	}
     	
     	return false;
-    }
-    
-  
-    /**
-     * Called when the equipped item is right clicked.
-     */
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-    	
-        ItemStack itemstack = player.getHeldItem(hand);
-        player.setActiveHand(hand);
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
-    }
-    
-    /**
-     * returns the action that specifies what animation to play when the items is being used
-     */
-    @Override
-    public EnumAction getItemUseAction(ItemStack stack) {
-        return EnumAction.BOW;
-    }
-    
-    /**
-     * How long it takes to use or consume an item
-     */
-    public int getMaxItemUseDuration(ItemStack stack)
-    {
-        return 50;
     }
     
     public BlockPos findBlockToCut(World world, BlockPos hitBlock, Block blockType) {

@@ -1,0 +1,13 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "primitimod:trees/oak/oak_sapling"
+  },
+  "variants": {
+    "stage" : {
+    	"0" : {},
+    	"1" : {}
+    },
+    "inventory": [{}]
+  }
+}

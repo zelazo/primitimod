@@ -13,6 +13,7 @@ import primitimod.core.client.ColorManager;
 import primitimod.trees.block.BlockComplexLog;
 import primitimod.trees.block.BlockFallingLeaves;
 import primitimod.trees.block.BlockLumberPile;
+import primitimod.trees.block.BlockTreeSapling;
 import primitimod.trees.block.BlockTreeRoot;
 import primitimod.trees.item.ItemBlockLog;
 import primitimod.trees.item.ItemLumber;
@@ -24,6 +25,7 @@ public class TreeRegistrar {
 	protected static final String rootName = "root";
 	protected static final String logName = "log";
 	protected static final String leavesName = "leaves";
+	protected static final String saplingName = "sapling";
 	protected static final String lumberName = "lumber";
 	protected static final String lumberPileName = "lumberpile";
 	
@@ -34,38 +36,45 @@ public class TreeRegistrar {
         registry.register(new BlockComplexLog(prefix+logName));
         registry.register(new BlockLumberPile(prefix+lumberPileName));
         registry.register(new BlockFallingLeaves(prefix+leavesName));
-        registry.register(new BlockTreeRoot(prefix+rootName) {
+        
+        BlockTreeRoot treeRoot = new BlockTreeRoot(prefix+rootName) {
 			@Override
 			public TileEntity createNewTileEntity(World world, int meta) {
 				try { return clazzTreeRootTE.newInstance(); } catch (Exception e) { e.printStackTrace(); }
 				return null;
 			}
-		});
+		};
+        registry.register(treeRoot);
+        registry.register(new BlockTreeSapling(prefix+saplingName, treeRoot));
+        
         
         GameRegistry.registerTileEntity(clazzTreeRootTE, treeName+"_"+rootName+"_te");
 	}
 	
-	public static void registerItems(String treeName, IForgeRegistry<Item> registry, BlockLumberPile lumberPile) {
+	public static void registerItems(String treeName, IForgeRegistry<Item> registry, BlockLumberPile lumberPile, BlockComplexLog log) {
 		String prefix = treesDir+treeName+"/";
 		
 		lumberPile.setItemLumber(new ItemLumber(prefix+lumberName, lumberPile));
-		registry.register(lumberPile.getItemLumber());
+		log.setItemLumber(lumberPile.getItemLumber());
 		
+		registry.register(lumberPile.getItemLumber());
 	}
 	
-	public static void registerItemBlocks(IForgeRegistry<Item> registry, BlockComplexLog logBlock, BlockFallingLeaves leavesBlock, Block rootBlock) {
+	public static void registerItemBlocks(IForgeRegistry<Item> registry, BlockComplexLog logBlock, BlockFallingLeaves leavesBlock, BlockTreeRoot rootBlock, BlockTreeSapling sapling) {
 		registry.register(new ItemBlockLog(logBlock));
 		registry.register(new ItemBlock(leavesBlock).setRegistryName(leavesBlock.getRegistryName()));
 		registry.register(new ItemBlock(rootBlock).setRegistryName(rootBlock.getRegistryName()));
+		registry.register(new ItemBlock(sapling).setRegistryName(sapling.getRegistryName()));
 	}
 	
 	@SideOnly(Side.CLIENT)
     public static void initItemModels(BlockComplexLog logBlock, BlockFallingLeaves leavesBlock, BlockTreeRoot rootBlock, 
-    								  BlockLumberPile lumberPileBlock, ItemLumber itemLumber) {
+    								  BlockTreeSapling treeSapling, BlockLumberPile lumberPileBlock, ItemLumber itemLumber) {
 		
 		logBlock.initModel();
 		leavesBlock.initModel();
 		rootBlock.initModel();
+		treeSapling.initModel();
 		lumberPileBlock.initModel();
 		itemLumber.initModel();
     }

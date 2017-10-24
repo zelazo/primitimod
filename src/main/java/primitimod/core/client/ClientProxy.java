@@ -12,8 +12,8 @@ import primitimod.PrimitiMod;
 import primitimod.core.CommonProxy;
 import primitimod.core.PrimitiModBlocks;
 import primitimod.core.PrimitiModItems;
-import primitimod.entity.EntityRock;
-import primitimod.entity.RenderFactory;
+import primitimod.entity.EntityStoneRock;
+import primitimod.entity.RenderStoneRock;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
@@ -45,9 +45,9 @@ public class ClientProxy extends CommonProxy {
 	
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
-    	PrimitiModBlocks.OakTree.initItemModels(PrimitiModBlocks.OakTree.log, PrimitiModBlocks.OakTree.leaves, PrimitiModBlocks.OakTree.root, PrimitiModBlocks.OakTree.lumberPile, PrimitiModBlocks.OakTree.lumber);
-    	PrimitiModBlocks.PalmTree.initItemModels(PrimitiModBlocks.PalmTree.log, PrimitiModBlocks.PalmTree.leaves, PrimitiModBlocks.PalmTree.root, PrimitiModBlocks.PalmTree.lumberPile, PrimitiModBlocks.PalmTree.lumber);
-    	PrimitiModBlocks.BirchTree.initItemModels(PrimitiModBlocks.BirchTree.log, PrimitiModBlocks.BirchTree.leaves, PrimitiModBlocks.BirchTree.root, PrimitiModBlocks.BirchTree.lumberPile, PrimitiModBlocks.BirchTree.lumber);
+    	PrimitiModBlocks.OakTree.initItemModels(PrimitiModBlocks.OakTree.log, PrimitiModBlocks.OakTree.leaves, PrimitiModBlocks.OakTree.root, PrimitiModBlocks.OakTree.sapling, PrimitiModBlocks.OakTree.lumberPile, PrimitiModBlocks.OakTree.lumber);
+    	PrimitiModBlocks.PalmTree.initItemModels(PrimitiModBlocks.PalmTree.log, PrimitiModBlocks.PalmTree.leaves, PrimitiModBlocks.PalmTree.root, PrimitiModBlocks.PalmTree.sapling, PrimitiModBlocks.PalmTree.lumberPile, PrimitiModBlocks.PalmTree.lumber);
+    	PrimitiModBlocks.BirchTree.initItemModels(PrimitiModBlocks.BirchTree.log, PrimitiModBlocks.BirchTree.leaves, PrimitiModBlocks.BirchTree.root, PrimitiModBlocks.BirchTree.sapling, PrimitiModBlocks.BirchTree.lumberPile, PrimitiModBlocks.BirchTree.lumber);
     	/*#TreeGenerator_initItemModels*/
 
 
@@ -60,7 +60,9 @@ public class ClientProxy extends CommonProxy {
         PrimitiModBlocks.initModels();
         PrimitiModItems.initModels();
         
-        RenderingRegistry.registerEntityRenderingHandler(EntityRock.class, RenderFactory.INSTANCE);
+        RenderingRegistry.registerEntityRenderingHandler(EntityStoneRock.class, RenderStoneRock.FACTORY);
+        
+//        RenderingRegistry.registerEntityRenderingHandler(EntityRock.class, RenderFactory.INSTANCE);
 
 //        RenderingRegistry.registerEntityRenderingHandler(EntitySnowball.class, new IRenderFactory<EntitySnowball>() {
 //

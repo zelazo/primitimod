@@ -7,19 +7,19 @@ import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntityRock extends EntityThrowable {
+public class EntityStoneRock extends EntityThrowable {
 
-	public EntityRock(World world)
+	public EntityStoneRock(World world)
     {
         super(world);
     }
 
-    public EntityRock(World world, EntityLivingBase thrower)
+    public EntityStoneRock(World world, EntityLivingBase thrower)
     {
         super(world, thrower);
     }
 
-    public EntityRock(World world, double x, double y, double z)
+    public EntityStoneRock(World world, double x, double y, double z)
     {
         super(world, x, y, z);
     }

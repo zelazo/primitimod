@@ -13,6 +13,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumBlockRenderType;
@@ -27,6 +28,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import primitimod.PrimitiMod;
+import primitimod.trees.item.ItemLumber;
 
 public class BlockComplexLog extends BlockLog {
 
@@ -69,6 +71,13 @@ public class BlockComplexLog extends BlockLog {
         return BOUNDING_BOXES[i][j];
     }
 
+    private ItemLumber itemLumber;
+    public ItemLumber getItemLumber() {
+    	return this.itemLumber;
+    }
+	public void setItemLumber(ItemLumber itemLumber) {
+		this.itemLumber = itemLumber;
+	}
     
     public BlockComplexLog(String registryName) {
         super();
@@ -78,6 +87,17 @@ public class BlockComplexLog extends BlockLog {
         setDefaultState(this.blockState.getBaseState()
         		.withProperty(TYPE, EnumLogType.LARGE)
         		.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
+    }
+    
+    /**
+     * Gets the metadata of the item this Block can drop. This method is called when the block gets destroyed. It
+     * returns the metadata of the dropped item based on the old metadata of the block.
+     */
+    @Override
+    public int damageDropped(IBlockState state)
+    {
+    	System.out.println("damageDropped");
+        return state.getValue(TYPE).getIndex();
     }
     
     @Override
@@ -222,17 +242,19 @@ public class BlockComplexLog extends BlockLog {
     }
     
     public enum EnumLogType implements IStringSerializable {
-    	LARGE(0, "large"),
-    	MEDIUM(1, "medium"),
-    	SMALL(2, "small"),
-    	DAMAGED(3, "damaged");
+    	LARGE(0, "large", 8),
+    	MEDIUM(1, "medium", 4),
+    	SMALL(2, "small", 2),
+    	DAMAGED(3, "damaged", 1);
     	
     	private int index;
     	private String name;
+    	private int lumberDropAmount;
     	
-    	private EnumLogType(int index, String name) {
+    	private EnumLogType(int index, String name, int lumberDropAmount) {
 			this.index = index;
 			this.name = name;
+			this.lumberDropAmount = lumberDropAmount;
 		}
 
 		public int getIndex() {
@@ -281,6 +303,10 @@ public class BlockComplexLog extends BlockLog {
 			}
 		}
 
+		public int getLumberDropAmount() {
+			return lumberDropAmount;
+		}
+		
     }
     
 

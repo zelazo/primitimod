@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross" : "primitimod:blocks/trees/birch/birch_sapling"
+    }
+}

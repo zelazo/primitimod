@@ -1,0 +1,14 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+	    "model": "primitimod:lumberheavyaxe",
+	    "textures": { 
+	    	"handle": "primitimod:blocks/trees/oak/oak_log_damaged",
+	    	"head": "blocks/stone" 
+    	}
+	},
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

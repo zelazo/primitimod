@@ -1,0 +1,12 @@
+{
+	"forge_marker": 0,
+    "multipart": [
+		{  
+        	"apply": { "model": "primitimod:rock", "y": 90 }
+        },
+        {  
+        	"apply": { "model": "primitimod:trees/palm/palm_lumber", "y": 90 }
+        }
+    ]
+		
+}

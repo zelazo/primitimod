@@ -11,6 +11,7 @@ import primitimod.core.registry.TreeRegistrar;
 import primitimod.trees.block.BlockComplexLog;
 import primitimod.trees.block.BlockFallingLeaves;
 import primitimod.trees.block.BlockLumberPile;
+import primitimod.trees.block.BlockTreeSapling;
 import primitimod.trees.block.BlockTreeRoot;
 import primitimod.trees.item.ItemLumber;
 
@@ -27,6 +28,8 @@ public class PrimitiModBlocks {
 	    public static BlockComplexLog log;
 	    @GameRegistry.ObjectHolder(prefix+leavesName)
 	    public static BlockFallingLeaves leaves;
+	    @GameRegistry.ObjectHolder(prefix+saplingName)
+	    public static BlockTreeSapling sapling;
 	    @GameRegistry.ObjectHolder(prefix+lumberPileName)
 	    public static BlockLumberPile lumberPile;
 	    @GameRegistry.ObjectHolder(prefix+lumberName)
@@ -43,6 +46,8 @@ public class PrimitiModBlocks {
 	    public static BlockComplexLog log;
 	    @GameRegistry.ObjectHolder(prefix+leavesName)
 	    public static BlockFallingLeaves leaves;
+	    @GameRegistry.ObjectHolder(prefix+saplingName)
+	    public static BlockTreeSapling sapling;
 	    @GameRegistry.ObjectHolder(prefix+lumberPileName)
 	    public static BlockLumberPile lumberPile;
 	    @GameRegistry.ObjectHolder(prefix+lumberName)
@@ -59,6 +64,8 @@ public class PrimitiModBlocks {
 	    public static BlockComplexLog log;
 	    @GameRegistry.ObjectHolder(prefix+leavesName)
 	    public static BlockFallingLeaves leaves;
+	    @GameRegistry.ObjectHolder(prefix+saplingName)
+	    public static BlockTreeSapling sapling;
 	    @GameRegistry.ObjectHolder(prefix+lumberPileName)
 	    public static BlockLumberPile lumberPile;
 	    @GameRegistry.ObjectHolder(prefix+lumberName)

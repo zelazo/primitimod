@@ -2,8 +2,7 @@
   "forge_marker": 1,
   "defaults": {
   	"textures": {
-      "#Material.001": "blocks/stone",
-	  "side": "blocks/stone"
+      "#Material.001": "primitimod:blocks/rock"
     }
   },
   "display" : {
@@ -20,9 +19,10 @@
 	    "0": {
 			"submodel": {
 	            "rock1": { 
-	            	"model": "primitimod:rock",
+	            	"model": "primitimod:rock.obj",
 	            	"transform" : {
-	        			"translation" : [0.5, 0.0, 0.5],
+	        			"translation" : [-0.2, 0.0, -0.2],
+	        			"rotation" : [ { "x" : 4 }, { "y" : -48 }, { "z" : 2 } ],
 	        			"scale" : 1.0
 	            	}
 	        	}

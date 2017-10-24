@@ -1,0 +1,15 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "primitimod:trees/birch/birch_sapling"
+  },
+  "variants": {
+    "stage" : {
+    	"0" : {},
+    	"1" : {
+    		"transform" : { "scale" : 1.6 }
+    	}
+    },
+    "inventory": [{}]
+  }
+}
