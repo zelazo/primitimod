@@ -1,19 +1,32 @@
 package primitimod.items;
 
 import java.util.EnumSet;
+import java.util.List;
+
+import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLog;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -25,6 +38,9 @@ import primitimod.trees.block.BlockComplexLog;
 
 public class ItemHeavyAxe extends SweepableItem {
 
+	private static final String[] handleTypes = { "birch", "oak", "palm" };
+	private static final String[] headTypes = { "andesite", "diorite", "granite" };
+	
 	public ItemHeavyAxe() {
 		setCreativeTab(PrimitiMod.tab);
         setRegistryName("lumberheavyaxe");
@@ -32,12 +48,92 @@ public class ItemHeavyAxe extends SweepableItem {
         setMaxDamage(100);
         setUnlocalizedName(getRegistryName().toString());
         setHarvestLevel("axe", 1);
-        
+        setHasSubtypes(true);
     }
 
+	@Override
+    public String getUnlocalizedName(ItemStack stack) {
+
+        String itemName = "item."+getRegistryName();
+        
+        if (stack.hasTagCompound()) {
+        	
+            NBTTagCompound itemData = stack.getTagCompound();
+            
+            if (itemData.hasKey("handletype")) {
+            	itemName += "."+itemData.getString("handletype");
+            }
+            
+            if(itemData.hasKey("headtype")) {
+            	itemName += "."+itemData.getString("headtype");
+            }
+        }
+        
+        return itemName;
+     }
+
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+    	
+        for (String handleType : handleTypes) {
+            for (String headType : headTypes) {
+	            ItemStack stack = new ItemStack(this);
+	            stack.setTagCompound(new NBTTagCompound());
+	            stack.getTagCompound().setString("handletype", handleType);
+	            stack.getTagCompound().setString("headtype", headType);
+	            items.add(stack);
+            
+            }
+//            http://www.minecraftforge.net/forum/topic/33823-18-multiple-texture-item/
+        }
+    }
+	
     @SideOnly(Side.CLIENT)
     public void initModel() {
-        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+//        ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+    	
+    	for (String handleType : handleTypes) {
+    		for (String headType : headTypes) {
+//    			ModelLoader.registerItemVariants(this, new ModelResourceLocation(getRegistryName(), "headtype="+headType));
+            	ModelLoader.registerItemVariants(this, new ModelResourceLocation(getRegistryName(), "handletype="+handleType+",headtype="+headType));
+        	}
+//    		ModelLoader.registerItemVariants(this, new ModelResourceLocation(getRegistryName(), "handletype="+handleType));
+    	}
+    	
+    	
+    	
+//        ModelBakery.registerItemVariants(this, new ModelResourceLocation(getRegistryName(), "handletype=oak"));
+//        ModelBakery.registerItemVariants(this, new ModelResourceLocation(getRegistryName(), "handletype=birch"));
+//        ModelBakery.registerItemVariants(this, new ModelResourceLocation(getRegistryName(), "handletype=palm"));
+//      ModelBakery.registerItemVariants(this, ModelLoader.getInventoryVariant(getRegistryName().getResourceDomain()+":"+getRegistryName().getResourcePath()+"#"+"handletype=oak"));
+//        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().reg
+
+      ModelLoader.setCustomMeshDefinition(this, new ItemMeshDefinition() {
+			@Override
+			public ModelResourceLocation getModelLocation(ItemStack stack) {
+				if (stack.hasTagCompound()) {
+					
+					String handleVariant = "handletype=";
+					String headVariant = "headtype=";
+		            NBTTagCompound itemData = stack.getTagCompound();
+		            
+		            if (itemData.hasKey("headtype")) {
+		            	headVariant += itemData.getString("headtype");
+		            }
+		            
+		            if(itemData.hasKey("handletype")) {
+		            	handleVariant += itemData.getString("handletype");
+		            }
+//		            return new ModelResourceLocation(getRegistryName(), headVariant);
+//		            return new ModelResourceLocation(getRegistryName(), handleVariant);
+		            return new ModelResourceLocation(getRegistryName(), handleVariant+","+headVariant);
+//		            return new ModelResourceLocation(getRegistryName(), "handletype=oak,headtype=andesite");
+		        }
+				return null;
+			}
+		});
     }
     
     /**
@@ -47,8 +143,6 @@ public class ItemHeavyAxe extends SweepableItem {
     public void onPlayerStoppedUsing(ItemStack stack, World world, EntityLivingBase entityLiving, int timeLeft) {
         if (entityLiving instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer)entityLiving;
-            
-
             
             int power = this.getMaxItemUseDuration(stack) - timeLeft;
             

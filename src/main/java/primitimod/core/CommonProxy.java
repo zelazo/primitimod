@@ -62,6 +62,7 @@ public class CommonProxy {
 
     	event.getRegistry().register(new ItemStoneRock());
     	event.getRegistry().register(new ItemHeavyAxe());
+    	
     }
     
     @SubscribeEvent

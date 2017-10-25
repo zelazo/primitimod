@@ -54,8 +54,6 @@ public class ClientProxy extends CommonProxy {
 
 
 
-
-
     	
         PrimitiModBlocks.initModels();
         PrimitiModItems.initModels();
